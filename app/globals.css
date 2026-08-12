@@ -556,23 +556,29 @@ footer { background: #0d0a08; color: rgba(255,255,255,.65); padding: 80px 5vw 25
 @keyframes photoFloat { 0%,100% { transform: rotateX(3deg) rotateY(-4deg) translateY(0); } 50% { transform: rotateX(-2deg) rotateY(3deg) translateY(-12px); } }
 @keyframes orbit { to { transform: rotate(378deg); } }
 
-/* Keep the expanded primary navigation visible without crowding the brand. */
+/* Keep desktop navigation on one line when browser zoom enters the tablet range. */
 @media (min-width: 901px) and (max-width: 1180px) {
   .nav-shell {
-    height: 108px; grid-template-columns: minmax(0,1fr) auto; grid-template-rows: 64px 44px;
-    gap: 0 18px; padding: 0 24px;
+    height: 72px; grid-template-columns: max-content minmax(0,1fr) max-content;
+    grid-template-rows: 1fr; column-gap: clamp(8px,1vw,14px); padding: 0 clamp(14px,2vw,24px);
   }
   .wordmark { grid-column: 1; grid-row: 1; }
-  .nav-cta { grid-column: 2; grid-row: 1; }
+  .nav-shell .nav-cta { grid-column: 3; grid-row: 1; padding-inline: 10px; font-size: 8px; }
   .nav-links {
-    grid-column: 1 / -1; grid-row: 2; display: flex; position: static; z-index: auto;
-    justify-content: center; align-items: center; gap: clamp(9px,1.2vw,16px);
+    grid-column: 2; grid-row: 1; display: flex; position: static; z-index: auto;
+    justify-content: center; align-items: center; gap: clamp(4px,.62vw,8px);
     max-height: none; padding: 0; overflow: visible; color: white; background: transparent;
     box-shadow: none; font-size: 13px; line-height: 1;
   }
   .nav-mobile-contact { display: none; }
   .menu-button { display: none; }
-  .nav-submenu { top: calc(100% + 15px); }
+  .nav-submenu { top: calc(100% + 22px); }
+}
+
+@media (min-width: 901px) and (max-width: 1040px) {
+  .header-official-logo { width: 158px; max-height: 42px; }
+  .nav-shell { padding-inline: 12px; }
+  .nav-cta { display: none; }
 }
 
 @media (max-width: 900px) {
