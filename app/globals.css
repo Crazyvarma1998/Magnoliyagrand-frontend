@@ -1076,6 +1076,24 @@ html body .site-footer .footer-social-icons a:hover { color: #e4bd77; border-col
   .page-gallery .gallery-page-grid figcaption { left: 28px; right: 28px; bottom: 25px; }
 }
 
+/* Home ballroom seal: keep both lines inside the gold circle on phones. */
+@media (max-width: 560px) {
+  .stage-capacity-seal {
+    width: 84px;
+    height: 84px;
+    padding: 8px;
+  }
+  .stage-capacity-seal strong { font-size: 23px; }
+  body .stage-capacity-seal span {
+    margin-top: 4px;
+    font-size: 7px;
+    letter-spacing: .09em;
+    line-height: 1.15;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
 /* Final brand-logo lockup: overrides the legacy monochrome footer treatment. */
 .brand-social-whatsapp-mark { transform: scale(.76); transform-origin: center; transform-box: fill-box; }
 .utility-socials .utility-icon-facebook { border-radius: 50%; }
@@ -1092,6 +1110,21 @@ html body .site-footer .footer-social-icons a:hover {
   background: transparent;
 }
 html body .site-footer .footer-social-icons svg { width: 29px; height: 29px; }
+
+/* Keep the utility social logos evenly spaced and contained on mobile. */
+@media (max-width: 560px) {
+  .utility-socials { gap: 6px; }
+  .utility-socials .utility-icon {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+  }
+  .utility-socials .utility-icon svg,
+  .utility-socials .utility-icon-facebook svg {
+    width: 16px;
+    height: 16px;
+  }
+}
 
 /* Desktop header legibility and breathing room. Mobile sizing stays unchanged. */
 @media (min-width: 1181px) {
