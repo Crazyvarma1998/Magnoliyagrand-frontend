@@ -116,7 +116,7 @@ button { font: inherit; }
 .header-official-logo { display: block; width: clamp(178px,14vw,220px); height: auto; max-height: 46px; object-fit: contain; object-position: left center; filter: brightness(0) invert(1); }
 .wordmark i, .footer-brand i { font-family: var(--font-display); font-size: 16px; text-transform: none; letter-spacing: .05em; }
 .monogram { width: 38px; height: 38px; border: 1px solid rgba(229,195,125,.75); border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-size: 13px; color: var(--gold-light); letter-spacing: -.04em; }
-.nav-links { display: flex; justify-content: center; gap: clamp(7px,.65vw,13px); min-width: 0; font-family: Georgia,"Times New Roman",serif; font-size: 12px; font-style: italic; font-weight: 400; text-transform: uppercase; letter-spacing: .06em; }
+.nav-links { display: flex; justify-content: center; gap: clamp(7px,.65vw,13px); min-width: 0; font-family: Georgia,"Times New Roman",serif; font-size: 13px; font-style: italic; font-weight: 400; text-transform: uppercase; letter-spacing: .06em; }
 .nav-links a { opacity: .76; white-space: nowrap; transition: opacity .25s; }
 .nav-links a:hover { opacity: 1; }
 .nav-links .nav-contact-link { display: none; }
@@ -568,7 +568,7 @@ footer { background: #0d0a08; color: rgba(255,255,255,.65); padding: 80px 5vw 25
     grid-column: 1 / -1; grid-row: 2; display: flex; position: static; z-index: auto;
     justify-content: center; align-items: center; gap: clamp(9px,1.2vw,16px);
     max-height: none; padding: 0; overflow: visible; color: white; background: transparent;
-    box-shadow: none; font-size: 11px; line-height: 1;
+    box-shadow: none; font-size: 13px; line-height: 1;
   }
   .nav-mobile-contact { display: none; }
   .menu-button { display: none; }
