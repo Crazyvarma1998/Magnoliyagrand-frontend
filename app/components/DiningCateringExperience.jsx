@@ -91,7 +91,7 @@ export default function DiningCateringExperience() {
         </section>
 
         <section className={styles.story} id="dining-story">
-          <div className={styles.storyAside} data-dining-reveal><span>01</span><p>The dining experience</p></div>
+          <div className={styles.storyAside} data-dining-reveal><p>The dining experience</p></div>
           <div className={styles.storyCopy} data-dining-reveal>
             <p className={styles.sectionLabel}>Made for your moment</p>
             <h2>Every unforgettable event has a <em>flavor of its own.</em></h2>
@@ -114,7 +114,7 @@ export default function DiningCateringExperience() {
               return (
                 <article className={styles.serviceCard} key={title} data-dining-reveal>
                   <div className={styles.serviceMedia}><img src={`/dining-catering/service-${number}.jpg`} alt={`${title} presentation at Magnoliya Grand`} width={portrait ? 1402 : 1536} height={portrait ? 1122 : 1024} loading={index < 2 ? "eager" : "lazy"} /></div>
-                  <div className={styles.serviceCopy}><div className={styles.serviceRule}><span>{number}</span><i /></div><h3>{title}</h3><p>{description}</p><a href="/contact">Ask our events team <span>↗</span></a></div>
+                  <div className={styles.serviceCopy}><div className={styles.serviceRule} aria-hidden="true"><i /></div><h3>{title}</h3><p>{description}</p><a href="/contact">Ask our events team <span>↗</span></a></div>
                 </article>
               );
             })}
@@ -145,10 +145,10 @@ export default function DiningCateringExperience() {
           <div className={styles.promiseTitle} data-dining-reveal><p className={styles.sectionLabel}>Your menu, beautifully considered</p><h2>Imagine it.<br /><em>Taste it.</em><br />Celebrate it.</h2></div>
           <div className={styles.promiseSteps}>
             {[
-              ["01", "Share your vision", "Tell us about your occasion, guests, traditions, service style, and culinary preferences."],
-              ["02", "Shape the menu", "Our team brings the details together—from flavor and dietary needs to presentation and timing."],
-              ["03", "Savor the moment", "Enjoy polished service and a dining experience that carries your celebration from first bite to final toast."],
-            ].map(([number, title, body]) => <article key={number} data-dining-reveal><span>{number}</span><h3>{title}</h3><p>{body}</p></article>)}
+              ["Share your vision", "Tell us about your occasion, guests, traditions, service style, and culinary preferences."],
+              ["Shape the menu", "Our team brings the details together—from flavor and dietary needs to presentation and timing."],
+              ["Savor the moment", "Enjoy polished service and a dining experience that carries your celebration from first bite to final toast."],
+            ].map(([title, body]) => <article key={title} data-dining-reveal><h3>{title}</h3><p>{body}</p></article>)}
           </div>
         </section>
 
