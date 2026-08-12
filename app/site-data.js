@@ -235,9 +235,9 @@ export const pages = {
       ["Denali Ballroom", "500", "800"],
       ["Denali 1", "200", "400"],
       ["Denali 2", "200", "400"],
-      ["TEJ Ballroom", "100", "200"],
-      ["TEJ 1", "40", "80"],
-      ["TEJ 2", "40", "80"],
+      ["Tej Ballroom", "100", "200"],
+      ["Tej 1", "40", "80"],
+      ["Tej 2", "40", "80"],
     ],
     additionalSpaces: [
       ["Front Pre-function Area", "3,000 square feet"],

@@ -41,13 +41,13 @@ const ballrooms = [
     body: "Liberty offers a versatile canvas for receptions, meetings, private celebrations, and supporting event moments. Its refined neutral palette gives décor, branding, florals, and lighting room to make a distinct impression.",
   },
   {
-    name: "TEJ Ballroom",
+    name: "Tej Ballroom",
     eyebrow: "Focused spaces, connected plans",
     image: "/home-assets/pre-event-area.jpg",
     width: 640,
     height: 720,
     capacity: "Up to 100 banquet · 200 theater",
-    body: "Designed for clarity and connection, the TEJ rooms support board meetings, seminars, training, green-room use, and breakout sessions—keeping smaller conversations close to the energy of the main event.",
+    body: "Designed for clarity and connection, the Tej rooms support board meetings, seminars, training, green-room use, and breakout sessions—keeping smaller conversations close to the energy of the main event.",
   },
 ];
 
