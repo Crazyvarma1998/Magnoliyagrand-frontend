@@ -300,6 +300,13 @@ export const pages = {
         image: "/service-assets/dedicated-event-coordination.jpg",
       },
       {
+        icon: "\u{1F48D}",
+        title: "Event Celebration Support",
+        body:
+          "Whether it's a wedding, reception, anniversary, birthday, Sweet 16, graduation, or cultural celebration, our team can help coordinate the details and trusted vendors needed to bring your vision to life.",
+        image: "/service-assets/wedding-celebration-support.jpg",
+      },
+      {
         icon: "\u{1F3A7}",
         title: "DJ & Entertainment",
         body:
@@ -321,18 +328,18 @@ export const pages = {
         image: "/service-assets/premium-audio-visual.jpg",
       },
       {
+        icon: "\u{1F4E1}",
+        title: "Professional Live Streaming & Virtual Events",
+        body:
+          "Extend your celebration beyond the ballroom with professional online streaming services. We can help bring your wedding, corporate event, conference, or special celebration to guests who cannot attend in person, allowing family, friends, clients, and colleagues to be part of the experience from anywhere in the world.",
+        image: "/home-assets/6-cutting-edge-technology.jpg",
+      },
+      {
         icon: "\u{1F4F8}",
         title: "Photography & Videography",
         body:
           "Preserve the moments that matter most. Our trusted photography and videography partners capture the emotions, celebrations, and unforgettable memories of your special day.",
         image: "/service-assets/photography-videography.jpg",
-      },
-      {
-        icon: "\u{1F48D}",
-        title: "Wedding & Celebration Support",
-        body:
-          "Whether it's a wedding, reception, anniversary, birthday, Sweet 16, graduation, or cultural celebration, our team can help coordinate the details and trusted vendors needed to bring your vision to life.",
-        image: "/service-assets/wedding-celebration-support.jpg",
       },
       {
         icon: "\u{1F3E2}",
