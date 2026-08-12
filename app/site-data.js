@@ -886,7 +886,7 @@ export const eventLinks = eventExperiences.map(({ title, href }) => [title, href
 // Global content used by the header, footer, contact blocks, metadata, and CTAs.
 // This shape can later be returned unchanged by a CMS or database API.
 export const siteSettings = {
-  brand: { name: "Magnoliya Grand", monogram: "MG", tagline: "Northern Virginia's landmark event venue" },
+  brand: { name: "Magnoliya Grand", monogram: "MG", tagline: "NORTHERN VIRGINIA'S LANDMARK EVENT VENUE" },
   contact: {
     phone: "+1 703 843 5536",
     phoneHref: "tel:+17038435536",
