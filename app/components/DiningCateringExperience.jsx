@@ -83,7 +83,7 @@ export default function DiningCateringExperience() {
           <div className={styles.heroShade} /><div className={styles.heroGrain} />
           <div className={styles.heroContent}>
             <p className={styles.eyebrow}><span /> The art of hospitality</p>
-            <h1 id="dining-hero-title">Dining <i>&amp;</i><br />Catering</h1>
+            <h1 id="dining-hero-title">Dining <i>&amp;</i> Catering</h1>
             <p className={styles.heroLead}>Exceptional cuisine. Beautifully presented.<br />Unforgettable experiences.</p>
           </div>
           <div className={styles.heroNote}><span>Magnoliya Grand</span><p>Thoughtful menus, polished service, and a table designed around your occasion.</p></div>
