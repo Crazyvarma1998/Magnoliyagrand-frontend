@@ -689,7 +689,12 @@ footer { background: #0d0a08; color: rgba(255,255,255,.65); padding: 80px 5vw 25
   .menu-button { justify-self: end; width: 38px; padding: 7px 3px; overflow: hidden; }
   .menu-button span { width: 22px; margin: 7px 5px; }
   .hero-video-headline { left: 12px; right: 12px; top: 52%; bottom: auto; }
-  .hero-video-headline h1 { font-size: clamp(20px,5.5vw,34px); line-height: 1; letter-spacing: -.025em; }
+  .hero-video-headline h1 {
+    font-size: clamp(23px,6.5vw,32px);
+    line-height: 1;
+    letter-spacing: -.04em;
+    transform: scaleX(.92);
+  }
   .hero-actions { align-items: flex-start; flex-direction: column; gap: 18px; }
   .hero-fact { display: none; }
   .event-grid { grid-template-columns: 1fr; }

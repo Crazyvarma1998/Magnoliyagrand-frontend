@@ -122,9 +122,19 @@ export default function BallroomCollection() {
               onMouseEnter={() => setActiveRoom(index)}
               key={room.name}
             >
+              <figure className={styles.mobileImage}>
+                <img
+                  src={room.image}
+                  width={room.width}
+                  height={room.height}
+                  alt={`${room.name} at Magnoliya Grand`}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                />
+                <figcaption>{room.capacity}</figcaption>
+              </figure>
               <p className={styles.eyebrow}>{room.eyebrow}</p>
               <h3>{room.name}</h3>
-              <p className={styles.capacity}>{room.capacity}</p>
               <p className={styles.body}>{room.body}</p>
               <a href="/contact">Explore this space <span>↗</span></a>
             </article>

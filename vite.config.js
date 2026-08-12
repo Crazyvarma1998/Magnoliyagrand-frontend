@@ -1,8 +1,12 @@
 import vinext from "vinext";
 import { defineConfig } from "vite";
-import hostingConfig from "./.openai/hosting.json";
+import { existsSync, readFileSync } from "node:fs";
 import { sites } from "./build/sites-vite-plugin.js";
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID = "00000000-0000-4000-8000-000000000000";
+const hostingConfigUrl = new URL("./.openai/hosting.json", import.meta.url);
+const hostingConfig = existsSync(hostingConfigUrl)
+    ? JSON.parse(readFileSync(hostingConfigUrl, "utf8"))
+    : {};
 const { d1, r2 } = hostingConfig;
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
