@@ -240,6 +240,8 @@ export const pages = {
       ["TEJ 2", "40", "80"],
     ],
     additionalSpaces: [
+      ["Front Pre-function Area", "3,000 square feet"],
+      ["Back Pre-function Area", "2,000 square feet"],
       ["Lake View Terrace", "150 guests"],
       ["Lake View Garden", "350 guests"],
       ["Lake View Patio", "100 guests"],
