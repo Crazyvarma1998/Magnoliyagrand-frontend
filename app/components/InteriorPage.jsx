@@ -427,7 +427,7 @@ export default function InteriorPage({ slug }) {
         </>
       )}
 
-      {!["blog", "contact"].includes(slug) && (<section className="page-intro">
+      {!["blog", "contact", "venue"].includes(slug) && (<section className="page-intro">
         <div>
           <p className="section-kicker">Magnoliya Grand · Manassas, Virginia</p>
           <h2>{page.introTitle}</h2>
@@ -435,7 +435,7 @@ export default function InteriorPage({ slug }) {
         <p>{page.intro}</p>
       </section>)}
 
-      {!["blog", "contact"].includes(slug) && <Stats items={page.highlights} />}
+      {!["blog", "contact", "venue"].includes(slug) && <Stats items={page.highlights} />}
       <PlanningFacts facts={eventPlanningFacts[slug]} slug={slug} />
       <EditorialSections sections={page.sections} />
       <CapacityTable rows={page.table} additionalSpaces={page.additionalSpaces} />

@@ -228,7 +228,7 @@ export const pages = {
     ],
     sections: [],
     table: [
-      ["Magnoliya Grand", "1,000", "1,900"],
+      ["Magna Ballroom", "1,000", "1,900"],
       ["Yoshino Ballroom", "500", "800"],
       ["Yoshino 1", "200", "400"],
       ["Yoshino 2", "200", "400"],
