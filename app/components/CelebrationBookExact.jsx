@@ -8,14 +8,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // App Router allows global CSS imports from a component. If you prefer,
 // move this import into app/layout.jsx instead.
 import "../celebration-book-exact.css";
-import { pages } from "../site-data";
 
 const site = {
   bookingUrl:
     "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062",
 };
 
-const celebrations = pages.features.featureGrid.map(([title, description, image], index) => ({
+const createCelebrations = (features) => features.map(([title, description, image]) => ({
   number: "",
   title,
   tagline: "Every detail, beautifully considered.",
@@ -85,13 +84,13 @@ function PageImage({ celebration, turning = false }) {
   );
 }
 
-function OpenSpread({ celebration, index, setRef }) {
+function OpenSpread({ celebration, index, setRef, total }) {
   return (
     <article
       ref={setRef}
       className="book-spread"
       aria-label={`${celebration.title}: ${celebration.tagline}`}
-      style={{ zIndex: celebrations.length - index }}
+      style={{ zIndex: total - index }}
     >
       <div className="book-page book-page--left">
         <PageImage celebration={celebration} />
@@ -105,13 +104,13 @@ function OpenSpread({ celebration, index, setRef }) {
   );
 }
 
-function TurningPage({ current, next, setRef, index }) {
+function TurningPage({ current, next, setRef, index, total }) {
   return (
     <div
       ref={setRef}
       className="turning-page"
       aria-hidden="true"
-      style={{ zIndex: celebrations.length + 4 - index }}
+      style={{ zIndex: total + 4 - index }}
     >
       <div className="turning-face turning-face--front">
         <PageCopy celebration={current} />
@@ -123,7 +122,7 @@ function TurningPage({ current, next, setRef, index }) {
   );
 }
 
-function ReducedCelebrations() {
+function ReducedCelebrations({ celebrations }) {
   return (
     <div className="book-reduced shell">
       <div className="section-heading">
@@ -153,7 +152,8 @@ function ReducedCelebrations() {
   );
 }
 
-export default function CelebrationBook() {
+export default function CelebrationBook({ features }) {
+  const celebrations = createCelebrations(features);
   const rootRef = useRef(null);
   const stageRef = useRef(null);
   const sceneRef = useRef(null);
@@ -493,7 +493,7 @@ export default function CelebrationBook() {
       className="memory-section"
       aria-labelledby="memory-title"
     >
-      <ReducedCelebrations />
+      <ReducedCelebrations celebrations={celebrations} />
 
       <div ref={stageRef} className="memory-stage">
         <div ref={sceneRef} className="memory-scene">
@@ -527,6 +527,7 @@ export default function CelebrationBook() {
                     key={celebration.title}
                     celebration={celebration}
                     index={index}
+                    total={celebrations.length}
                     setRef={(node) => {
                       spreadRefs.current[index] = node;
                     }}
@@ -539,6 +540,7 @@ export default function CelebrationBook() {
                     current={celebration}
                     next={celebrations[index + 1]}
                     index={index}
+                    total={celebrations.length}
                     setRef={(node) => {
                       turningRefs.current[index] = node;
                     }}

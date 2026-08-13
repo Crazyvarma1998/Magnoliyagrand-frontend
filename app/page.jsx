@@ -1,9 +1,201 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { eventExperiences, homePageContent, pages, sharedAboutContent, sharedFaqs } from "./site-data";
+import { eventExperiences, sharedAboutContent, sharedFaqs } from "./site-data";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import LocationGlobe from "./components/LocationGlobe";
 import { imageDimensions } from "./image-data";
+const homePageContent = {
+  "hero": {
+    "location": "Manassas, Virginia",
+    "titleLines": [
+      "Excellent Venue,",
+      "Memorable Events!"
+    ],
+    "description": "Northern Virginia's grand stage for weddings, conferences, cultural celebrations and everything unforgettable.",
+    "image": "/home-assets/banner-13.jpg",
+    "video": "/home-assets/magnoliya-home-hero-20260808.mp4?v=20260808-drive",
+    "primaryLabel": "Begin your event",
+    "secondaryLabel": "Explore the venue",
+    "secondaryHref": "#spaces",
+    "factValue": "2,000",
+    "factLabel": "guests, one extraordinary space",
+    "scrollLabel": "Scroll to enter"
+  },
+  "aboutButton": {
+    "label": "Discover our story",
+    "href": "/about"
+  },
+  "ballroom": {
+    "kicker": "The flagship space",
+    "title": "One grand room.",
+    "accent": "Infinite ways to use it.",
+    "description": "The Magna Ballroom transforms with you — one dramatic expanse or four distinct ballrooms, each engineered for impeccable flow.",
+    "image": "/gallery/img-4.jpg",
+    "imageAlt": "The Magna Ballroom set for a grand banquet",
+    "caption": "The Magna Ballroom",
+    "captionLocation": "Manassas · Virginia",
+    "sealValue": "14.5K",
+    "sealLabel": "square feet",
+    "verticalLabel": "One room · four configurations",
+    "stats": [
+      [
+        "1,200",
+        "banquet guests"
+      ],
+      [
+        "4",
+        "divisible rooms"
+      ]
+    ],
+    "button": {
+      "label": "Plan your layout",
+      "href": "#contact"
+    }
+  },
+  "film": {
+    "kicker": "See the space come alive",
+    "title": "A grand venue,",
+    "accent": "in motion.",
+    "description": "Step inside Magnoliya Grand and experience the scale, atmosphere, and waterfront setting before your private tour.",
+    "poster": "/gallery/img-15.jpg",
+    "posterAlt": "Aerial view of Magnoliya Grand beside the waterfront",
+    "videoUrl": "https://mediazilla.com/y7UiZjjwTK",
+    "posterKicker": "Press play to enter",
+    "posterTitle": "Experience the grandeur.",
+    "caption": "From waterfront arrival to grand-ballroom scale — see the complete Magnoliya experience."
+  },
+  "experience": {
+    "kicker": "Considered at every scale",
+    "title": "Grand in vision.",
+    "accent": "Personal in every detail.",
+    "description": "Ten flexible indoor and waterfront outdoor settings, supported by a team who understands that seamless is something guests should feel — never see.",
+    "amenities": [
+      "Waterfront gardens",
+      "Hilton-connected stays",
+      "Chef-led catering",
+      "Production-ready AV",
+      "Complimentary parking",
+      "Private bridal suites",
+      "Dedicated pre-event area",
+      "Exclusive green rooms",
+      "Professional event planners"
+    ],
+    "mainImage": "/home-assets/5-landscaped-garden.jpg",
+    "mainImageAlt": "Landscaped garden and Hilton Garden Inn at Magnoliya Grand",
+    "secondaryImage": "/home-assets/4-waterfront-patio.jpg",
+    "secondaryImageAlt": "Waterfront patio dining at Magnoliya Grand",
+    "sealValue": "10",
+    "sealLabel": "spaces",
+    "closing": [
+      "Your event, shaped",
+      "around you."
+    ]
+  },
+  "gallery": {
+    "kicker": "A closer look",
+    "title": "Every angle,",
+    "accent": "distinctly Magnoliya.",
+    "description": "Real spaces. Real light. A setting that shifts effortlessly from first arrival to final toast.",
+    "items": [
+      [
+        "/home-assets/1-expansive-ballroom-space.jpg",
+        "Magnoliya Grand ballroom set for a banquet",
+        "The Magna Ballroom · Banquet setting",
+        "shot-wide"
+      ],
+      [
+        "/gallery/img-11.jpg",
+        "Waterfront sunset at Magnoliya Grand",
+        "Waterfront · Golden hour",
+        "shot-tall"
+      ],
+      [
+        "/gallery/img-9.jpg",
+        "Magnoliya Grand outdoor patio with fire pit",
+        "The patio · After hours",
+        "shot-square"
+      ],
+      [
+        "/gallery/img-1.jpg",
+        "Main entrance of Magnoliya Grand",
+        "Your arrival · Infantry Ridge Road",
+        "shot-entry"
+      ],
+      [
+        "/gallery/img-15.jpg",
+        "Aerial view of Magnoliya Grand and waterfront setting",
+        "Manassas, Virginia · From above",
+        "shot-aerial"
+      ]
+    ]
+  },
+  "testimonials": {
+    "kicker": "What guests remember",
+    "title": "Remarkable spaces.",
+    "accent": "Even better experiences.",
+    "items": [
+      [
+        "Thank you for bringing our vision to life!",
+        "Magnoliya Grand Manor has been a partner of our organization over the past few years and provided excellent services in assisting us with our conference social events. They provide a professional and fun atmosphere for our attendees."
+      ],
+      [
+        "Smoothly & professionally from start to end!",
+        "Not only did you create a great ambiance with the lounges, lighting, and music, but the food displays were a work of art. People are still talking about the entertainment. My guests all enjoyed a wonderful evening."
+      ],
+      [
+        "Everything went together perfectly.",
+        "The event went great. The staff was absolutely awesome, and we will definitely keep your group in mind for future events. Thank you again. It was a phenomenal event!"
+      ]
+    ]
+  },
+  "faq": {
+    "kicker": "Plan with confidence",
+    "title": "Before your tour,",
+    "accent": "the essentials.",
+    "description": "Direct answers to the questions planners ask most about capacity, location, accommodations, and event types.",
+    "button": {
+      "label": "View all frequently asked questions",
+      "href": "/faq"
+    }
+  },
+  "location": {
+    "kicker": "Close to everything. Apart from ordinary.",
+    "title": "A destination",
+    "accent": "within easy reach.",
+    "coordinates": "38.80515° N · 77.51532° W",
+    "distances": [
+      [
+        "12",
+        "miles to Dulles"
+      ],
+      [
+        "25",
+        "miles to D.C."
+      ],
+      [
+        "0",
+        "steps to Hilton"
+      ]
+    ],
+    "buttonLabel": "Get directions"
+  },
+  "finalCta": {
+    "kicker": "Your date is waiting",
+    "title": "Let's make the room",
+    "accent": "become your occasion.",
+    "description": "Tell us what you're imagining. We'll show you what's possible.",
+    "primaryLabel": "Submit booking request",
+    "secondaryLabel": "Email the events team",
+    "phoneLabel": "Prefer to talk?"
+  },
+  "events": {
+    "eyebrow": "Every occasion deserves its own world",
+    "title": "Gatherings with",
+    "accent": "presence and possibility.",
+    "intro": "Magnoliya Grand adapts to the people, purpose, and energy of each gathering. Explore our dedicated event experiences, then schedule a private tour to shape the venue around your date, guest count, and vision."
+  }
+};
+
 const bookingUrl = "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062";
 const homeFaqs = sharedFaqs.slice(0, 4);
 export default function Home() {
@@ -211,10 +403,10 @@ export default function Home() {
       <section className="occasions" id="occasions">
         <div className="occasion-heading">
           <div>
-            <p className="section-kicker">{pages.events.eyebrow}</p>
-            <h2>{pages.events.title}<br /><em>{pages.events.accent}</em></h2>
+            <p className="section-kicker">{homePageContent.events.eyebrow}</p>
+            <h2>{homePageContent.events.title}<br /><em>{homePageContent.events.accent}</em></h2>
           </div>
-          <p>{pages.events.intro}</p>
+          <p>{homePageContent.events.intro}</p>
         </div>
         <div className="event-grid">
           {eventExperiences.map((event, index) => (<a

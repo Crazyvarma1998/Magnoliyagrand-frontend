@@ -9,7 +9,6 @@ import RoomsSuitesExperience from "./RoomsSuitesExperience";
 import RoomsSuitesScrollAnimations from "./RoomsSuitesScrollAnimations";
 import ContactExperience from "./ContactExperience";
 import BallroomCollection from "./BallroomCollection";
-import { eventPlanningFacts, pages, seoTitles } from "../site-data";
 import { imageDimensions } from "../image-data";
 import { SITE_URL } from "../seo-config";
 
@@ -23,12 +22,11 @@ const EVENT_PAGE_SLUGS = [
   "milestone-celebrations",
 ];
 
-export function createPageMetadata(slug) {
-  const page = pages[slug];
+export function createPageMetadata(slug, page, seoTitle) {
   if (!page) return {};
 
   return {
-    title: seoTitles[slug] || `${page.navLabel} | Magnoliya Grand`,
+    title: seoTitle || `${page.navLabel} | Magnoliya Grand`,
     description: page.description,
     alternates: { canonical: `/${slug}` },
     robots: { index: true, follow: true },
@@ -42,7 +40,7 @@ export function createPageMetadata(slug) {
     },
     twitter: {
       card: "summary_large_image",
-      title: seoTitles[slug] || `${page.navLabel} | Magnoliya Grand`,
+      title: seoTitle || `${page.navLabel} | Magnoliya Grand`,
       description: page.description,
       images: [page.heroImage],
     },
@@ -74,7 +72,7 @@ function faqSchema(faqs) {
   };
 }
 
-function pageSchema(page, slug) {
+function pageSchema(page, slug, seoTitle) {
   const url = `${SITE_URL}/${slug}`;
   const pageTypes = {
     about: "AboutPage",
@@ -95,7 +93,7 @@ function pageSchema(page, slug) {
       "@type": pageTypes[slug] || "WebPage",
       "@id": `${url}#webpage`,
       url,
-      name: seoTitles[slug] || `${page.navLabel} | Magnoliya Grand`,
+      name: seoTitle || `${page.navLabel} | Magnoliya Grand`,
       description: page.description,
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#venue` },
@@ -383,11 +381,10 @@ function Policy({ items }) {
   );
 }
 
-export default function InteriorPage({ slug }) {
-  const page = pages[slug];
+export default function InteriorPage({ slug, page, planningFacts, seoTitle }) {
   const shouldShowFaqs = Boolean(page.faqs) && !EVENT_PAGE_SLUGS.includes(slug);
 
-  const schemas = [breadcrumbSchema(slug, page.navLabel), pageSchema(page, slug)];
+  const schemas = [breadcrumbSchema(slug, page.navLabel), pageSchema(page, slug, seoTitle)];
   if (shouldShowFaqs) schemas.push(faqSchema(page.faqs));
   if (slug === "venue" && page.table) schemas.push(venueSpacesSchema(page.table));
 
@@ -436,11 +433,11 @@ export default function InteriorPage({ slug }) {
       </section>)}
 
       {!["blog", "contact", "venue"].includes(slug) && <Stats items={page.highlights} />}
-      <PlanningFacts facts={eventPlanningFacts[slug]} slug={slug} />
+      <PlanningFacts facts={planningFacts} slug={slug} />
       <EditorialSections sections={page.sections} />
       <CapacityTable rows={page.table} additionalSpaces={page.additionalSpaces} />
       {slug === "features" ? (
-        <CelebrationBookExact />
+        <CelebrationBookExact features={page.featureGrid} />
       ) : slug === "rooms-suites" ? (
         <RoomsSuitesExperience hotels={page.hotelStays} benefits={page.stayBenefits} />
       ) : slug === "services" ? (
