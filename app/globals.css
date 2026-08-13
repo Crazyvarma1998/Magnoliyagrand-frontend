@@ -689,12 +689,19 @@ footer { background: #0d0a08; color: rgba(255,255,255,.65); padding: 80px 5vw 25
   .nav-cta { min-height: 31px; max-width: 108px; padding-inline: 8px; font-size: 7px; letter-spacing: .07em; }
   .menu-button { justify-self: end; width: 38px; padding: 7px 3px; overflow: hidden; }
   .menu-button span { width: 22px; margin: 7px 5px; }
-  .hero-video-headline { left: 12px; right: 12px; top: 52%; bottom: auto; }
+  .hero-video-headline {
+    inset: 0;
+    padding: 0 10px;
+    transform: none;
+    align-items: center;
+    justify-content: center;
+  }
   .hero-video-headline h1 {
-    font-size: clamp(26px,7.2vw,38px);
+    font-size: clamp(32px,9vw,44px);
     line-height: 1;
     letter-spacing: -.04em;
-    transform: scaleX(.88);
+    transform: scaleX(.8);
+    transform-origin: center;
   }
   .hero-actions { align-items: flex-start; flex-direction: column; gap: 18px; }
   .hero-fact { display: none; }
@@ -1080,6 +1087,120 @@ html body .site-footer .footer-social-icons a:hover { color: #e4bd77; border-col
   .page-gallery .gallery-page-grid figure:nth-child(n) { grid-column: 1; grid-row: span 4; }
   .page-gallery .gallery-page-grid figure:nth-child(4n+1) { grid-row: span 5; }
   .page-gallery .gallery-page-grid figcaption { left: 28px; right: 28px; bottom: 25px; }
+}
+
+/* Unified typography by content role across every route. */
+:root {
+  --type-page-title: clamp(46px,5.6vw,92px);
+  --type-section-title: clamp(48px,5.5vw,82px);
+  --type-card-title: clamp(34px,3.4vw,54px);
+  --type-subheading: clamp(26px,2.5vw,38px);
+  --type-intro: 16px;
+  --type-body: 15px;
+  --type-label: 11px;
+}
+
+.page-hero-copy h1,
+.blog-article-hero h1 { font-size: var(--type-page-title) !important; }
+
+.manifesto h2,
+.stage-copy h2,
+.film-heading h2,
+.occasion-heading h2,
+.experience-copy h2,
+.gallery-intro h2,
+.testimonial-heading h2,
+.home-faq > div:first-child > h2,
+.location-copy h2,
+.final-cta h2,
+.page-intro h2,
+.planning-facts header h2,
+.capacity-heading h2,
+.faq-section > div:first-child > h2,
+.services-showcase__header h2,
+.matterport-tour__heading h2,
+.hotel-tour__heading h2,
+.rooms-stays__header h2,
+.stay-benefits__header h2,
+.gallery-showcase__header h2,
+.visual-diary__header h2,
+.gallery-wall-header h2,
+.contact-experience__header h2,
+.blog-checklist h2,
+.blog-related__heading h2,
+.page-booking h2,
+.contact-card h2,
+.contact-inquiry__intro h3,
+.memory-intro h2,
+.memory-outro h2,
+.book-reduced .section-heading h2,
+.feature-book-copy h2,
+.feature-book-intro h2,
+.feature-book-outro h2 { font-size: var(--type-section-title) !important; }
+
+.editorial-copy h2,
+.feature-page-grid h2,
+.service-detail-card__copy h2,
+.event-copy h3,
+.testimonial-grid h3,
+.policy-section article h2,
+.blog-story-section h2,
+.blog-related__card h3,
+.hotel-stay__copy h3,
+.stay-benefit h3,
+.reduced-story h3 { font-size: var(--type-card-title) !important; }
+
+.page-hero-copy > p:last-child,
+.page-intro > p,
+.planning-facts header > p:last-child,
+.planning-facts dd,
+.editorial-copy > p:not(.section-kicker),
+.capacity-heading > p:last-child,
+.faq-list details p,
+.policy-section p,
+.feature-page-grid p,
+.services-showcase__header > p,
+.service-detail-card__copy > p:last-child,
+.matterport-tour__heading > p,
+.matterport-tour__instruction p,
+.hotel-tour__instruction,
+.venue-services__grid p,
+.rooms-stays__header > p:last-child,
+.hotel-stay__copy > p:not(.section-kicker),
+.stay-benefit p,
+.blog-article-hero__copy > p,
+.blog-story-section > div > p:not(.section-kicker),
+.blog-checklist li,
+.event-card .event-copy p,
+.page-events .feature-page-grid p,
+.page-booking > p:not(.section-kicker),
+.feature-book-copy > p:not(.feature-book-eyebrow),
+.feature-book-turn-front > span,
+.feature-book-turn-back > span,
+.book-reduced .section-heading > p:last-child,
+.reduced-story p,
+.contact-experience__intro,
+.contact-inquiry__intro > p:not(.section-kicker) {
+  font-size: var(--type-body) !important;
+  line-height: 1.85 !important;
+}
+
+.page-intro > p,
+.services-showcase__header > p,
+.rooms-stays__header > p:last-child { font-size: var(--type-intro) !important; }
+
+.eyebrow,
+.section-kicker,
+.service-detail-card__label { font-size: var(--type-label) !important; }
+
+@media (max-width: 900px) {
+  :root {
+    --type-page-title: clamp(42px,10.5vw,64px);
+    --type-section-title: clamp(42px,11vw,58px);
+    --type-card-title: clamp(34px,9vw,46px);
+    --type-subheading: clamp(26px,7vw,34px);
+    --type-intro: 15px;
+  }
 }
 
 /* Home ballroom seal: keep both lines inside the gold circle on phones. */
