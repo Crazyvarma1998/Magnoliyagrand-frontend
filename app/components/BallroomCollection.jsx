@@ -54,6 +54,16 @@ const ballrooms = [
 export default function BallroomCollection() {
   const sectionRef = useRef(null);
   const [activeRoom, setActiveRoom] = useState(0);
+  const [mobileLayout, setMobileLayout] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 980px)");
+    const updateLayout = () => setMobileLayout(mediaQuery.matches);
+
+    updateLayout();
+    mediaQuery.addEventListener("change", updateLayout);
+    return () => mediaQuery.removeEventListener("change", updateLayout);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -84,35 +94,37 @@ export default function BallroomCollection() {
       </header>
 
       <div className={styles.atlas}>
-        <div className={styles.stageColumn}>
-          <div className={styles.stage}>
-            <div className={styles.imageStack}>
-              {ballrooms.map((room, index) => (
-                <img
-                  className={index === activeRoom ? styles.activeImage : ""}
-                  src={room.image}
-                  width={room.width}
-                  height={room.height}
-                  alt={index === activeRoom ? `${room.name} at Magnoliya Grand` : ""}
-                  aria-hidden={index !== activeRoom}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  key={room.name}
-                />
-              ))}
-              <div className={styles.stageShade} />
-              <div className={styles.stageFrame} aria-hidden="true"><span /><span /><span /><span /></div>
-              <div className={styles.stageCaption} key={ballrooms[activeRoom].name}>
-                <p>{ballrooms[activeRoom].eyebrow}</p>
-                <strong>{ballrooms[activeRoom].name}</strong>
-                <span>{ballrooms[activeRoom].capacity}</span>
+        {!mobileLayout && (
+          <div className={styles.stageColumn}>
+            <div className={styles.stage}>
+              <div className={styles.imageStack}>
+                {ballrooms.map((room, index) => (
+                  <img
+                    className={index === activeRoom ? styles.activeImage : ""}
+                    src={room.image}
+                    width={room.width}
+                    height={room.height}
+                    alt={index === activeRoom ? `${room.name} at Magnoliya Grand` : ""}
+                    aria-hidden={index !== activeRoom}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    key={room.name}
+                  />
+                ))}
+                <div className={styles.stageShade} />
+                <div className={styles.stageFrame} aria-hidden="true"><span /><span /><span /><span /></div>
+                <div className={styles.stageCaption} key={ballrooms[activeRoom].name}>
+                  <p>{ballrooms[activeRoom].eyebrow}</p>
+                  <strong>{ballrooms[activeRoom].name}</strong>
+                  <span>{ballrooms[activeRoom].capacity}</span>
+                </div>
+              </div>
+              <div className={styles.progress} aria-hidden="true">
+                {ballrooms.map((room, index) => <i className={index === activeRoom ? styles.activeDot : ""} key={room.name} />)}
               </div>
             </div>
-            <div className={styles.progress} aria-hidden="true">
-              {ballrooms.map((room, index) => <i className={index === activeRoom ? styles.activeDot : ""} key={room.name} />)}
-            </div>
           </div>
-        </div>
+        )}
 
         <div className={styles.chapters}>
           {ballrooms.map((room, index) => (
@@ -122,17 +134,19 @@ export default function BallroomCollection() {
               onMouseEnter={() => setActiveRoom(index)}
               key={room.name}
             >
-              <figure className={styles.mobileImage}>
-                <img
-                  src={room.image}
-                  width={room.width}
-                  height={room.height}
-                  alt={`${room.name} at Magnoliya Grand`}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                />
-                <figcaption>{room.capacity}</figcaption>
-              </figure>
+              {mobileLayout && (
+                <figure className={styles.mobileImage}>
+                  <img
+                    src={room.image}
+                    width={room.width}
+                    height={room.height}
+                    alt={`${room.name} at Magnoliya Grand`}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
+                  <figcaption>{room.capacity}</figcaption>
+                </figure>
+              )}
               <p className={styles.eyebrow}>{room.eyebrow}</p>
               <h3>{room.name}</h3>
               <p className={styles.body}>{room.body}</p>

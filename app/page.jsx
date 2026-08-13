@@ -4,17 +4,6 @@ import { eventExperiences, homePageContent, pages, sharedAboutContent, sharedFaq
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import LocationGlobe from "./components/LocationGlobe";
 import { imageDimensions } from "./image-data";
-const amenities = [
-    "Waterfront gardens",
-    "Hilton-connected stays",
-    "Chef-led catering",
-    "Production-ready AV",
-    "Complimentary parking",
-    "Private bridal suites",
-    "Dedicated pre-event area",
-    "Exclusive green rooms",
-    "Professional event planners",
-];
 const bookingUrl = "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062";
 const homeFaqs = sharedFaqs.slice(0, 4);
 export default function Home() {
@@ -149,36 +138,33 @@ export default function Home() {
             <figure className="stage-main-frame">
               <img {...imageDimensions(homePageContent.ballroom.image)} src={homePageContent.ballroom.image} alt={homePageContent.ballroom.imageAlt} loading="eager" decoding="async"/>
               <figcaption>
-                <span>The Magna Ballroom</span>
-                <small>Manassas · Virginia</small>
+                <span>{homePageContent.ballroom.caption}</span>
+                <small>{homePageContent.ballroom.captionLocation}</small>
               </figcaption>
             </figure>
             <div className="stage-side-panel panel-right">
               <img {...imageDimensions(homePageContent.ballroom.image)} src={homePageContent.ballroom.image} alt="" decoding="async"/>
             </div>
             <div className="stage-capacity-seal">
-              <strong>14.5K</strong>
-              <span>square feet</span>
+              <strong>{homePageContent.ballroom.sealValue}</strong>
+              <span>{homePageContent.ballroom.sealLabel}</span>
             </div>
           </div>
-          <span className="stage-vertical-label">One room · four configurations</span>
+          <span className="stage-vertical-label">{homePageContent.ballroom.verticalLabel}</span>
         </div>
         <div className="stage-copy">
           <p className="section-kicker light">{homePageContent.ballroom.kicker}</p>
           <h2>
-            <span className="stage-title-line">One grand room.</span>
-            <em className="stage-title-line stage-title-gold">Infinite ways to use it.</em>
+            <span className="stage-title-line">{homePageContent.ballroom.title}</span>
+            <em className="stage-title-line stage-title-gold">{homePageContent.ballroom.accent}</em>
           </h2>
-          <p>
-            The 14,500 sq ft Magna Ballroom transforms with you — one dramatic
-            expanse or four distinct ballrooms, each engineered for impeccable flow.
-          </p>
+          <p>{homePageContent.ballroom.description}</p>
           <div className="stat-row">
-            <div><strong>14,500</strong><span>square feet</span></div>
-            <div><strong>1,200</strong><span>banquet guests</span></div>
-            <div><strong>4</strong><span>divisible rooms</span></div>
+            {homePageContent.ballroom.stats.map(([value, label]) => (
+              <div key={label}><strong>{value}</strong><span>{label}</span></div>
+            ))}
           </div>
-          <a className="line-link" href="#contact">Plan your layout <span>↗</span></a>
+          <a className="line-link" href={homePageContent.ballroom.button.href}>{homePageContent.ballroom.button.label} <span>↗</span></a>
         </div>
       </section>
 
@@ -248,12 +234,9 @@ export default function Home() {
 
       <section className="experience" id="experience">
         <div className="experience-copy">
-          <p className="section-kicker">Considered at every scale</p>
-          <h2>Grand in vision.<br /><em>Personal in every detail.</em></h2>
-          <p>
-            Ten flexible indoor and waterfront outdoor settings, supported by
-            a team who understands that seamless is something guests should feel — never see.
-          </p>
+          <p className="section-kicker">{homePageContent.experience.kicker}</p>
+          <h2>{homePageContent.experience.title}<br /><em>{homePageContent.experience.accent}</em></h2>
+          <p>{homePageContent.experience.description}</p>
           <div className="amenity-list">
             {homePageContent.experience.amenities.map((item) => (<div key={item}>{item}</div>))}
           </div>
@@ -264,7 +247,7 @@ export default function Home() {
             <img {...imageDimensions(homePageContent.experience.secondaryImage)} className="experience-float-photo" src={homePageContent.experience.secondaryImage} alt={homePageContent.experience.secondaryImageAlt} loading="lazy" decoding="async"/>
             <span className="experience-seal">{homePageContent.experience.sealValue}<small>{homePageContent.experience.sealLabel}</small></span>
           </div>
-          <p>Your event, shaped<br />around you.</p>
+          <p>{homePageContent.experience.closing[0]}<br />{homePageContent.experience.closing[1]}</p>
         </div>
       </section>
 
@@ -274,26 +257,12 @@ export default function Home() {
           <h2>{homePageContent.gallery.title}<br /><em>{homePageContent.gallery.accent}</em></h2>
           <p>{homePageContent.gallery.description}</p>
         </div>
-        <figure className="gallery-shot shot-wide">
-          <img {...imageDimensions("/gallery/img-4.jpg")} src="/gallery/img-4.jpg" alt="Magnoliya Grand ballroom set for a banquet" loading="lazy" decoding="async"/>
-          <figcaption>The Magna Ballroom · Banquet setting</figcaption>
-        </figure>
-        <figure className="gallery-shot shot-tall">
-          <img {...imageDimensions("/gallery/img-11.jpg")} src="/gallery/img-11.jpg" alt="Waterfront sunset at Magnoliya Grand" loading="lazy" decoding="async"/>
-          <figcaption>Waterfront · Golden hour</figcaption>
-        </figure>
-        <figure className="gallery-shot shot-square">
-          <img {...imageDimensions("/gallery/img-9.jpg")} src="/gallery/img-9.jpg" alt="Magnoliya Grand outdoor patio with fire pit" loading="lazy" decoding="async"/>
-          <figcaption>The patio · After hours</figcaption>
-        </figure>
-        <figure className="gallery-shot shot-entry">
-          <img {...imageDimensions("/gallery/img-1.jpg")} src="/gallery/img-1.jpg" alt="Main entrance of Magnoliya Grand" loading="lazy" decoding="async"/>
-          <figcaption>Your arrival · Infantry Ridge Road</figcaption>
-        </figure>
-        <figure className="gallery-shot shot-aerial">
-          <img {...imageDimensions("/gallery/img-15.jpg")} src="/gallery/img-15.jpg" alt="Aerial view of Magnoliya Grand and waterfront setting" loading="lazy" decoding="async"/>
-          <figcaption>Manassas, Virginia · From above</figcaption>
-        </figure>
+        {homePageContent.gallery.items.map(([image, alt, caption, shotClass]) => (
+          <figure className={`gallery-shot ${shotClass}`} key={image}>
+            <img {...imageDimensions(image)} src={image} alt={alt} loading="lazy" decoding="async"/>
+            <figcaption>{caption}</figcaption>
+          </figure>
+        ))}
       </section>
 
       <section className="testimonials">
@@ -338,27 +307,27 @@ export default function Home() {
           </h2>
           <div className="location-address">
             <p>7001 Infantry Ridge Road<br />Manassas, Virginia 20109</p>
-            <span>38.80515° N · 77.51532° W</span>
+            <span>{homePageContent.location.coordinates}</span>
           </div>
           <div className="distance-row">
-            <div><strong>12</strong><span>miles to Dulles</span></div>
-            <div><strong>25</strong><span>miles to D.C.</span></div>
-            <div><strong>0</strong><span>steps to Hilton</span></div>
+            {homePageContent.location.distances.map(([value, label]) => (
+              <div key={label}><strong>{value}</strong><span>{label}</span></div>
+            ))}
           </div>
-          <a className="line-link" href="https://maps.google.com/?q=7001+Infantry+Ridge+Rd+Manassas+VA+20109">Get directions <span>↗</span></a>
+          <a className="line-link" href="https://maps.google.com/?q=7001+Infantry+Ridge+Rd+Manassas+VA+20109">{homePageContent.location.buttonLabel} <span>↗</span></a>
         </div>
       </section>
 
       <section className="final-cta" id="contact">
         <div className="cta-orbit orbit-a"/><div className="cta-orbit orbit-b"/>
-        <p className="section-kicker light">Your date is waiting</p>
-        <h2>Let&apos;s make the room<br /><em>become your occasion.</em></h2>
-        <p>Tell us what you&apos;re imagining. We&apos;ll show you what&apos;s possible.</p>
+        <p className="section-kicker light">{homePageContent.finalCta.kicker}</p>
+        <h2>{homePageContent.finalCta.title}<br /><em>{homePageContent.finalCta.accent}</em></h2>
+        <p>{homePageContent.finalCta.description}</p>
         <div className="final-actions">
-          <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">Submit booking request <span>↗</span></a>
-          <a className="text-link" href="mailto:sales@magnoliyagrand.com?subject=Magnoliya%20Grand%20Event%20Inquiry">Email the events team <span>↗</span></a>
+          <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">{homePageContent.finalCta.primaryLabel} <span>↗</span></a>
+          <a className="text-link" href="mailto:sales@magnoliyagrand.com?subject=Magnoliya%20Grand%20Event%20Inquiry">{homePageContent.finalCta.secondaryLabel} <span>↗</span></a>
         </div>
-        <a className="contact-phone" href="tel:+17038435536">Prefer to talk? +1 703 843 5536</a>
+        <a className="contact-phone" href="tel:+17038435536">{homePageContent.finalCta.phoneLabel} +1 703 843 5536</a>
       </section>
 
       <SiteFooter />
