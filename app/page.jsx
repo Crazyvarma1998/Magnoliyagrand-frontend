@@ -206,9 +206,14 @@ export default function Home() {
         if (!video)
             return;
         const playHero = () => {
+            video.autoplay = true;
+            video.loop = true;
             video.muted = true;
             video.defaultMuted = true;
+            video.playsInline = true;
             video.setAttribute("muted", "");
+            video.setAttribute("autoplay", "");
+            video.setAttribute("loop", "");
             video.setAttribute("playsinline", "");
             video.setAttribute("webkit-playsinline", "");
             const playback = video.play();
@@ -218,14 +223,24 @@ export default function Home() {
             if (document.visibilityState === "visible")
                 playHero();
         };
+        const retryTimers = [250, 1000, 2500].map((delay) => window.setTimeout(playHero, delay));
         playHero();
         window.addEventListener("pageshow", playHero);
+        window.addEventListener("focus", playHero);
         document.addEventListener("visibilitychange", resumeWhenVisible);
+        video.addEventListener("loadedmetadata", playHero);
+        video.addEventListener("loadeddata", playHero);
+        video.addEventListener("canplay", playHero);
         window.addEventListener("touchstart", playHero, { once: true, passive: true });
         window.addEventListener("pointerdown", playHero, { once: true, passive: true });
         return () => {
+            retryTimers.forEach((timer) => window.clearTimeout(timer));
             window.removeEventListener("pageshow", playHero);
+            window.removeEventListener("focus", playHero);
             document.removeEventListener("visibilitychange", resumeWhenVisible);
+            video.removeEventListener("loadedmetadata", playHero);
+            video.removeEventListener("loadeddata", playHero);
+            video.removeEventListener("canplay", playHero);
             window.removeEventListener("touchstart", playHero);
             window.removeEventListener("pointerdown", playHero);
         };
@@ -285,7 +300,7 @@ export default function Home() {
       <SiteHeader />
 
       <section className="hero" id="top">
-        <div className="hero-image">
+        <div className="hero-image" style={{ backgroundImage: `url("${homePageContent.hero.image}")` }}>
           <video
             ref={heroVideoRef}
             className="hero-video"
@@ -294,8 +309,10 @@ export default function Home() {
             loop
             playsInline
             preload="auto"
+            poster={homePageContent.hero.image}
             aria-hidden="true"
             onCanPlay={(event) => event.currentTarget.play()?.catch(() => {})}
+            onLoadedData={(event) => event.currentTarget.play()?.catch(() => {})}
           >
             <source src={homePageContent.hero.video} type="video/mp4"/>
           </video>

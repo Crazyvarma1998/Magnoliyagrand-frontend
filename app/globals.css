@@ -3970,7 +3970,7 @@ footer { background: #1d2228; color: rgba(255,255,255,.68); }
 .event-card .event-copy h3 {
   max-width: 100%;
   margin: 0 0 10px;
-  font-size: clamp(29px,2.15vw,38px);
+  font-size: clamp(28px,calc(2.15vw - 1px),37px);
   line-height: .96;
   letter-spacing: -.025em;
   overflow-wrap: break-word;
@@ -3989,14 +3989,14 @@ footer { background: #1d2228; color: rgba(255,255,255,.68); }
   .event-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .event-card,
   .event-card:nth-child(n+5) { grid-column: auto; min-height: 520px; }
-  .event-card .event-copy h3 { font-size: clamp(32px,4vw,43px); }
+  .event-card .event-copy h3 { font-size: clamp(31px,calc(4vw - 1px),42px); }
   .event-card .event-copy p { font-size: 11px; }
 }
 
 @media (max-width: 900px) {
   .event-card { min-height: 500px; }
   .event-card .event-copy { left: 24px; right: 58px; bottom: 30px; }
-  .event-card .event-copy h3 { font-size: clamp(31px,6.4vw,42px); line-height: .96; }
+  .event-card .event-copy h3 { font-size: clamp(30px,calc(6.4vw - 1px),41px); line-height: .96; }
   .event-card .event-copy p { font-size: 11px; line-height: 1.55; }
   .event-card .event-arrow { right: 23px; bottom: 28px; }
 }
@@ -4004,9 +4004,28 @@ footer { background: #1d2228; color: rgba(255,255,255,.68); }
 @media (max-width: 560px) {
   .event-card { min-height: 540px; }
   .event-card .event-copy { left: 22px; right: 54px; bottom: 28px; }
-  .event-card .event-copy h3 { font-size: clamp(34px,10.5vw,44px); }
+  .event-card .event-copy h3 { font-size: clamp(33px,calc(10.5vw - 1px),43px); }
   .event-card .event-copy p { font-size: 11px; line-height: 1.58; }
   .event-card .event-arrow { right: 21px; bottom: 26px; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .event-card { perspective: none; transform-style: flat; }
+  .event-card .event-copy {
+    z-index: 4;
+    opacity: 1;
+    visibility: visible;
+    transform: none !important;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+  }
+  .event-card .event-copy h3,
+  .event-card .event-copy p,
+  .event-card .event-arrow {
+    opacity: 1;
+    visibility: visible;
+  }
+  .event-card .event-arrow { transform: none !important; }
 }
 
 /* Services page — editorial service collection with alternating image-led panels. */
