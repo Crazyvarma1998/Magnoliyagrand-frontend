@@ -185,7 +185,7 @@ const homePageContent = {
     "accent": "become your occasion.",
     "description": "Tell us what you're imagining. We'll show you what's possible.",
     "primaryLabel": "Submit booking request",
-    "secondaryLabel": "Email the events team",
+    "secondaryLabel": "Contact the events team",
     "phoneLabel": "Prefer to talk?"
   },
   "events": {
