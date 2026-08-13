@@ -30,7 +30,7 @@ const page = {
     {
       "kicker": "Our vision",
       "title": "Every gathering deserves an exceptional setting.",
-      "body": "From corporate conferences to life's most celebrated moments, our vision is to create an experience that feels remarkable and effortlessly accommodating. Our team brings each idea to life with precision, warmth, and care.",
+      "body": "From conferences and corporate events to life's most celebrated moments, our vision is to create an experience that feels remarkable and effortlessly accommodating. Our team brings each idea to life with precision, warmth, and care.",
       "image": "/gallery/img-4.jpg"
     },
     {

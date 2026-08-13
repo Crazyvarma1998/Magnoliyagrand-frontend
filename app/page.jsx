@@ -200,11 +200,16 @@ const bookingUrl = "https://magnoliyagrandmanorconferenceandeventcenter.triplese
 const homeFaqs = sharedFaqs.slice(0, 4);
 export default function Home() {
     const [videoOpen, setVideoOpen] = useState(false);
+    const [heroVideoReady, setHeroVideoReady] = useState(false);
     const heroVideoRef = useRef(null);
     useEffect(() => {
         const video = heroVideoRef.current;
         if (!video)
             return;
+        const markHeroReady = () => {
+            if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA)
+                setHeroVideoReady(true);
+        };
         const playHero = () => {
             video.autoplay = true;
             video.loop = true;
@@ -217,7 +222,9 @@ export default function Home() {
             video.setAttribute("playsinline", "");
             video.setAttribute("webkit-playsinline", "");
             const playback = video.play();
-            playback?.catch(() => {});
+            playback?.then(markHeroReady).catch(() => {
+                markHeroReady();
+            });
         };
         const resumeWhenVisible = () => {
             if (document.visibilityState === "visible")
@@ -231,6 +238,10 @@ export default function Home() {
         video.addEventListener("loadedmetadata", playHero);
         video.addEventListener("loadeddata", playHero);
         video.addEventListener("canplay", playHero);
+        video.addEventListener("loadeddata", markHeroReady);
+        video.addEventListener("canplay", markHeroReady);
+        video.addEventListener("playing", markHeroReady);
+        markHeroReady();
         window.addEventListener("touchstart", playHero, { once: true, passive: true });
         window.addEventListener("pointerdown", playHero, { once: true, passive: true });
         return () => {
@@ -241,6 +252,9 @@ export default function Home() {
             video.removeEventListener("loadedmetadata", playHero);
             video.removeEventListener("loadeddata", playHero);
             video.removeEventListener("canplay", playHero);
+            video.removeEventListener("loadeddata", markHeroReady);
+            video.removeEventListener("canplay", markHeroReady);
+            video.removeEventListener("playing", markHeroReady);
             window.removeEventListener("touchstart", playHero);
             window.removeEventListener("pointerdown", playHero);
         };
@@ -299,7 +313,7 @@ export default function Home() {
     return (<main>
       <SiteHeader />
 
-      <section className="hero" id="top">
+      <section className={`hero${heroVideoReady ? " is-video-ready" : ""}`} id="top">
         <div className="hero-image">
           <video
             ref={heroVideoRef}
@@ -310,11 +324,23 @@ export default function Home() {
             playsInline
             preload="auto"
             aria-hidden="true"
-            onCanPlay={(event) => event.currentTarget.play()?.catch(() => {})}
-            onLoadedData={(event) => event.currentTarget.play()?.catch(() => {})}
+            onCanPlay={(event) => {
+              setHeroVideoReady(true);
+              event.currentTarget.play()?.catch(() => {});
+            }}
+            onLoadedData={(event) => {
+              setHeroVideoReady(true);
+              event.currentTarget.play()?.catch(() => {});
+            }}
+            onPlaying={() => setHeroVideoReady(true)}
           >
             <source src={homePageContent.hero.video} type="video/mp4"/>
           </video>
+        </div>
+        <div className="hero-video-loader" aria-hidden="true">
+          <div className="hero-video-loader__mark"><span /></div>
+          <p>Magnoliya Grand</p>
+          <small>Preparing your arrival</small>
         </div>
         <div className="hero-video-headline">
           <h1>
@@ -327,11 +353,13 @@ export default function Home() {
       <section className="manifesto">
         <p className="section-kicker">{sharedAboutContent.label}</p>
         <h2>{sharedAboutContent.homeTitle}<br /><em>{sharedAboutContent.homeAccent}</em></h2>
-        <div className="manifesto-grid">
-          <p>{sharedAboutContent.homeSummary}</p>
-          <p>{sharedAboutContent.serviceSummary}</p>
+        <div className="manifesto-content">
+          <div className="manifesto-grid">
+            <p>{sharedAboutContent.homeSummary}</p>
+            <p>{sharedAboutContent.serviceSummary}</p>
+          </div>
+          <a className="line-link dark-link manifesto-link" href="/about">Discover our story <span>↗</span></a>
         </div>
-        <a className="line-link dark-link manifesto-link" href="/about">Discover our story <span>↗</span></a>
       </section>
 
       <section className="stage-section" id="spaces">

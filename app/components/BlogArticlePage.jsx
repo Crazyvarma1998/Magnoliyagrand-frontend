@@ -84,7 +84,6 @@ export default function BlogArticlePage({ slug }) {
                   <p className="section-kicker">{section.eyebrow}</p>
                   <h2>{section.title}</h2>
                   <p>{section.body}</p>
-                  <span className="blog-chapter-no">0{index + 1}</span>
                 </div>
               </section>
             ))}

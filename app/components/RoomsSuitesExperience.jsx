@@ -25,17 +25,19 @@ export default function RoomsSuitesExperience({ hotels, benefits }) {
                 <figure className="hotel-stay__accent-image">
                   <img {...imageDimensions(hotel.images[2])} src={hotel.images[2]} alt={`${hotel.brand} accommodations in Manassas, Virginia`} loading="lazy" decoding="async" />
                 </figure>
-                <span className="hotel-stay__proximity">{hotel.eyebrow}</span>
+                {hotel.eyebrow && <span className="hotel-stay__proximity">{hotel.eyebrow}</span>}
               </div>
 
               <div className="hotel-stay__copy">
-                <p className="section-kicker">{hotel.eyebrow}</p>
+                {hotel.eyebrow && <p className="section-kicker">{hotel.eyebrow}</p>}
                 <h2 className="hotel-stay__brand">{hotel.brand}</h2>
                 <h3>{hotel.title}</h3>
                 <p>{hotel.description}</p>
-                <ul>
-                  {hotel.features.map((feature) => <li key={feature}>{feature}</li>)}
-                </ul>
+                {hotel.features?.length > 0 && (
+                  <ul>
+                    {hotel.features.map((feature) => <li key={feature}>{feature}</li>)}
+                  </ul>
+                )}
                 <a className="hotel-stay__link" href={hotel.link} target="_blank" rel="noreferrer">{hotel.linkLabel} <span aria-hidden="true">↗</span></a>
               </div>
             </article>

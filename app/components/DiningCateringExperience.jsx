@@ -10,13 +10,13 @@ const services = [
   ["Wedding & Reception Dining", "Elegant plated dinners, buffets, family-style dining, and customized wedding menus."],
   ["Corporate Catering", "Breakfasts, lunches, dinners, business meetings, conferences, and executive events."],
   ["Cocktail & Hors d'Oeuvres Receptions", "Passed appetizers, specialty stations, and elegant cocktail-style service."],
-  ["Buffet Dining", "Professionally presented buffet options suitable for large celebrations and conferences."],
+  ["Buffet Dining", "Professionally presented buffet options suitable for large celebrations and conferences.", "/dining-catering/buffet.png"],
   ["Plated & Seated Dinners", "Formal multi-course dining with attentive table service."],
-  ["Food Stations & Action Stations", "Interactive culinary stations customized to the theme and style of your event."],
+  ["Food Stations & Action Stations", "Interactive culinary stations customized to the theme and style of your event.", "/dining-catering/food-stations.png"],
   ["Dessert & Specialty Displays", "Dessert tables, specialty sweets, cakes, and customized presentations through trusted partners."],
   ["Custom & Fusion Cuisine", "Menus tailored to cultural preferences, dietary requirements, and special culinary themes."],
-  ["International & Cultural Menus", "Customized selections for South Asian, Indian, Middle Eastern, and other cultural celebrations."],
-  ["Beverage Service", "Coffee and tea service, soft drinks, specialty beverages, and other event beverage options."],
+  ["International & Cultural Menus", "Customized selections for South Asian, Indian, Middle Eastern, and other cultural celebrations.", "/dining-catering/international-cultural.png"],
+  ["Beverage Service", "Coffee and tea service, soft drinks, specialty beverages, alcohol, including bourbons, and other event beverage options.", "/dining-catering/beverages.png"],
   ["Late-Night & Event Enhancements", "Late-night snacks and specialty food offerings for extended celebrations."],
   ["Menu Tastings", "Advance tasting opportunities for select events to help clients finalize their menu and presentation."],
 ];
@@ -97,7 +97,7 @@ export default function DiningCateringExperience() {
             <h2>Every unforgettable event has a <em>flavor of its own.</em></h2>
             <div className={styles.storyColumns}>
               <p>At Magnoliya Grand, exceptional dining is an essential part of an exceptional event. Our culinary team creates thoughtfully designed menus tailored to your celebration, from elegant plated dinners and sophisticated buffets to interactive food stations, cocktail receptions, and customized cultural cuisine.</p>
-              <div><p>Whether you&apos;re hosting an elegant wedding, corporate conference, grand gala, cultural celebration, or intimate gathering, our catering team works closely with you to create a dining experience that reflects your vision and delights your guests.</p><a href="#services">Discover every service <span>↓</span></a></div>
+              <div><p>Whether you&apos;re hosting an elegant wedding, conference, corporate event, grand gala, cultural celebration, or intimate gathering, our catering team works closely with you to create a dining experience that reflects your vision and delights your guests.</p><a href="#services">Discover every service <span>↓</span></a></div>
             </div>
           </div>
         </section>
@@ -108,12 +108,12 @@ export default function DiningCateringExperience() {
             <p>Customizable menus, professional service, beautiful presentation, and trusted culinary partners—brought together for a dining experience that feels entirely your own.</p>
           </header>
           <div className={styles.serviceList}>
-            {services.map(([title, description], index) => {
+            {services.map(([title, description, customImage], index) => {
               const number = String(index + 1).padStart(2, "0");
               const portrait = index >= 7 && [7, 8, 10, 11, 12].includes(index);
               return (
                 <article className={styles.serviceCard} key={title} data-dining-reveal>
-                  <div className={styles.serviceMedia}><img src={`/dining-catering/service-${number}.jpg`} alt={`${title} presentation at Magnoliya Grand`} width={portrait ? 1402 : 1536} height={portrait ? 1122 : 1024} loading={index < 2 ? "eager" : "lazy"} /></div>
+                  <div className={styles.serviceMedia}><img src={customImage ?? `/dining-catering/service-${number}.jpg`} alt={`${title} presentation at Magnoliya Grand`} width={customImage ? 1254 : portrait ? 1402 : 1536} height={customImage ? 1254 : portrait ? 1122 : 1024} loading={index < 2 ? "eager" : "lazy"} /></div>
                   <div className={styles.serviceCopy}><div className={styles.serviceRule} aria-hidden="true"><i /></div><h3>{title}</h3><p>{description}</p><a href="/contact">Ask our events team <span>↗</span></a></div>
                 </article>
               );

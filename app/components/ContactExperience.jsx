@@ -175,7 +175,7 @@ export default function ContactExperience() {
           <div className="contact-concierge__address">
             <small>Visit Magnoliya Grand</small>
             <p>{siteSettings.contact.street}<br />{siteSettings.contact.city}</p>
-            <span>Minutes from Dulles · Connected to Hilton Garden Inn</span>
+            <span>Minutes from Dulles Airport</span>
           </div>
 
           <div className="contact-concierge__actions">

@@ -70,7 +70,10 @@ function PageCopy({ celebration }) {
 
 function PageImage({ celebration, turning = false }) {
   return (
-    <div className={`page-image ${turning ? "is-turning" : ""}`}>
+    <div
+      className={`page-image ${turning ? "is-turning" : ""}`}
+      style={{ position: "absolute", overflow: "hidden" }}
+    >
       <Image
         src={celebration.image}
         alt={turning ? "" : celebration.alt}
@@ -135,7 +138,7 @@ function ReducedCelebrations({ celebrations }) {
       <div className="reduced-stories">
         {celebrations.map((celebration) => (
           <article key={celebration.title} className="reduced-story">
-            <div className="reduced-story__image">
+            <div className="reduced-story__image" style={{ position: "relative", overflow: "hidden" }}>
               <Image
                 src={celebration.image}
                 alt={celebration.alt}
@@ -165,6 +168,7 @@ export default function CelebrationBook({ features }) {
   const stackRightRef = useRef(null);
   const introRef = useRef(null);
   const outroRef = useRef(null);
+  const scrollCuesRef = useRef(null);
   const spreadRefs = useRef([]);
   const turningRefs = useRef([]);
 
@@ -217,6 +221,7 @@ export default function CelebrationBook({ features }) {
       // entrance and the final sink stay centered on what the viewer sees.
       gsap.set(bookRef.current, { transformOrigin: "75% 50%" });
       gsap.set(outroRef.current, { autoAlpha: 0, y: 36 });
+      gsap.set(scrollCuesRef.current, { autoAlpha: 0 });
 
       const timeline = gsap.timeline({
         defaults: { ease: "none" },
@@ -270,6 +275,11 @@ export default function CelebrationBook({ features }) {
             ease: "power2.out",
           },
           0.1,
+        )
+        .to(
+          scrollCuesRef.current,
+          { autoAlpha: 1, duration: 0.04, ease: "power1.out" },
+          0.18,
         )
         // Beat 3 Ã¢â‚¬â€ the cover swings across the spine while the book slides to
         // recenter as a full spread; the left page, its page stack, and the
@@ -400,6 +410,11 @@ export default function CelebrationBook({ features }) {
       // half retires, the book recenters on its new footprint, and the
       // closed album settles away for the outro.
       timeline
+        .to(
+          scrollCuesRef.current,
+          { autoAlpha: 0, duration: 0.04, ease: "power1.in" },
+          0.76,
+        )
         .set(closerRef.current, { autoAlpha: 1 }, 0.795)
         .set(shadowRef.current, { transformOrigin: "25% 50%" }, 0.798)
         .set(bookRef.current, { transformOrigin: "25% 50%" }, 0.798)
@@ -509,6 +524,16 @@ export default function CelebrationBook({ features }) {
           </header>
 
           <div className="book-perspective">
+            <div ref={scrollCuesRef} className="book-scroll-cues" aria-hidden="true">
+              <span className="book-scroll-cue book-scroll-cue--left">
+                <i />
+                <small>Scroll to explore</small>
+              </span>
+              <span className="book-scroll-cue book-scroll-cue--right">
+                <small>Scroll to explore</small>
+                <i />
+              </span>
+            </div>
             <div ref={bookRef} className="book">
               <div ref={shadowRef} className="book-shadow" />
               <div className="book-block">

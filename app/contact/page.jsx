@@ -9,7 +9,7 @@ const page = {
   "title": "Your date is waiting.",
   "accent": "Let's begin.",
   "description": "Contact Magnoliya Grand in Manassas, Virginia to schedule a venue tour, request event availability, or speak with the events team.",
-  "heroImage": "/gallery/img-1.jpg",
+  "heroImage": "/contact-assets/contact-hero.png",
   "introTitle": "Tell us what you are imagining",
   "intro": "Share your date, guest count, and event vision. Our team will help you explore the right space, configuration, services, and next steps.",
   "highlights": [

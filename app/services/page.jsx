@@ -72,7 +72,8 @@ const page = {
       "icon": "🤝",
       "title": "Trusted Partner Network",
       "body": "You don't have to coordinate everything yourself. We work with a carefully selected network of trusted DJs, decorators, photographers, entertainment professionals, and other event specialists to simplify your planning and help deliver a cohesive experience.",
-      "image": "/service-assets/trusted-partner-network.jpg"
+      "image": "/service-assets/trusted-partner-network.png",
+      "imageFit": "contain"
     }
   ]
 };

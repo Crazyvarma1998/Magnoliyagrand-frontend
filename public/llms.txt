@@ -27,7 +27,7 @@ Location: 7001 Infantry Ridge Rd, Manassas, VA 20109
 ## Event types
 
 - Weddings and receptions: https://magnoliyagrand.vercel.app/weddings
-- Corporate conferences: https://magnoliyagrand.vercel.app/corporate-conferences
+- Conferences & Corporate: https://magnoliyagrand.vercel.app/corporate-conferences
 - Meetings and seminars: https://magnoliyagrand.vercel.app/meetings-seminars
 - Galas and fundraisers: https://magnoliyagrand.vercel.app/galas-fundraisers
 - Cultural and music concerts: https://magnoliyagrand.vercel.app/cultural-music-concerts

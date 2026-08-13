@@ -5,7 +5,7 @@ const seoTitle = "Conference Venue Near Dulles | Magnoliya Grand";
 
 const page = {
   "navLabel": "Conferences",
-  "eyebrow": "Corporate conferences",
+  "eyebrow": "Conferences & Corporate",
   "title": "Big ideas deserve",
   "accent": "a room with presence.",
   "description": "A full-service conference venue near Dulles Airport and Washington, D.C. with a 2,000-seat ballroom, breakout configurations, AV, Wi-Fi, catering, and hotel access.",

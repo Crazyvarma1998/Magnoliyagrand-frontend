@@ -10,22 +10,6 @@ const page = {
   "accent": "beautifully connected.",
   "description": "Discover the catering, technology, hotel access, parking, private suites, waterfront spaces, and planning support at Magnoliya Grand.",
   "heroImage": "/home-assets/5-landscaped-garden.jpg",
-  "introTitle": "Exceptional features. Limitless possibilities.",
-  "intro": "Every Magnoliya Grand feature is designed around guest comfort and planner confidence. The result is a venue where logistics recede and the experience takes center stage.",
-  "highlights": [
-    {
-      "value": "10",
-      "label": "flexible venue spaces"
-    },
-    {
-      "value": "0",
-      "label": "steps to Hilton Garden Inn"
-    },
-    {
-      "value": "1",
-      "label": "dedicated planning team"
-    }
-  ],
   "featureGrid": [
     [
       "Expansive Ballroom",

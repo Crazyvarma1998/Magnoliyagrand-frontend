@@ -3,6 +3,8 @@ const exactDimensions = {
   "/home-assets/logo.png": { width: 2248, height: 1638 },
   "/home-assets/logo-white.png": { width: 2248, height: 1638 },
   "/home-assets/magnoliya-official-logo.png": { width: 4216, height: 806 },
+  "/contact-assets/contact-hero.png": { width: 2051, height: 767 },
+  "/service-assets/trusted-partner-network.png": { width: 1254, height: 1254 },
   "/gallery/img-1.jpg": { width: 465, height: 385 },
   "/gallery/img-3.jpg": { width: 465, height: 385 },
 };

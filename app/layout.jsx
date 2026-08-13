@@ -214,7 +214,7 @@ const siteSchema = {
       ],
       knowsAbout: [
         "Northern Virginia weddings",
-        "Corporate conferences near Dulles Airport",
+        "Conferences & Corporate events near Dulles Airport",
         "Meetings and seminars",
         "Galas and fundraisers",
         "Cultural and music concerts",
@@ -230,7 +230,7 @@ const siteSchema = {
         name: "Magnoliya Grand event experiences",
         itemListElement: [
           "Weddings and receptions",
-          "Corporate conferences",
+          "Conferences & Corporate",
           "Meetings and seminars",
           "Galas and fundraisers",
           "Cultural and music concerts",

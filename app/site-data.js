@@ -36,7 +36,7 @@ export const sharedAboutContent = {
     "Attached to the Hilton Garden Inn in Manassas, Magnoliya Grand is a premier destination for extraordinary events and unforgettable conferences. We are 25 miles from Washington, D.C. and 12 miles from Dulles International Airport, making arrival simple for local and traveling guests.",
   visionTitle: "Every gathering deserves an exceptional setting.",
   vision:
-    "From corporate conferences to life's most celebrated moments, our vision is to create an experience that feels remarkable and effortlessly accommodating. Our team brings each idea to life with precision, warmth, and care.",
+    "From conferences and corporate events to life's most celebrated moments, our vision is to create an experience that feels remarkable and effortlessly accommodating. Our team brings each idea to life with precision, warmth, and care.",
   serviceTitle: "The details feel seamless because they are deeply considered.",
   service:
     "Experienced event professionals, chef-led catering, production-ready technology, and flexible spaces work together as one. From the first plan to the final farewell, our team is committed to service excellence.",

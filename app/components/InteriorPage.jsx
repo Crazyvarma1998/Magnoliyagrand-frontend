@@ -251,7 +251,7 @@ function ServicesShowcase({ items }) {
       </header>
       <div className="services-showcase__list">
         {items.map((item) => (
-          <article className="service-detail-card" key={item.title}>
+          <article className={`service-detail-card${item.imageFit === "contain" ? " service-detail-card--contain" : ""}`} key={item.title}>
             <div className="service-detail-card__image">
               <img {...imageDimensions(item.image)} src={item.image} alt={`${item.title} at Magnoliya Grand`} loading="lazy" decoding="async" />
             </div>
@@ -424,7 +424,7 @@ export default function InteriorPage({ slug, page, planningFacts, seoTitle }) {
         </>
       )}
 
-      {!["blog", "contact", "venue"].includes(slug) && (<section className="page-intro">
+      {page.introTitle && page.intro && !["blog", "contact", "venue"].includes(slug) && (<section className="page-intro">
         <div>
           <p className="section-kicker">Magnoliya Grand · Manassas, Virginia</p>
           <h2>{page.introTitle}</h2>

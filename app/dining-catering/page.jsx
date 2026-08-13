@@ -60,7 +60,7 @@ const diningServiceSchema = {
       "Dessert and specialty displays",
       "Custom and fusion cuisine",
       "International and cultural menus",
-      "Beverage service",
+      "Beverage service, including alcohol and bourbons",
       "Late-night event enhancements",
       "Menu tastings",
     ].map((name) => ({

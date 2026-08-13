@@ -352,7 +352,7 @@ canvas {
 }
 
 .book-perspective {
-  --book-top: clamp(5.5rem, 9vh, 7rem);
+  --book-top: clamp(7.25rem, 13vh, 9rem);
   --book-bottom: clamp(2rem, 4vh, 3rem);
 
   position: absolute;
@@ -365,6 +365,54 @@ canvas {
   perspective: 2200px;
   pointer-events: none;
 }
+
+.book-scroll-cues {
+  position: absolute;
+  z-index: 30;
+  inset: var(--book-top) clamp(1rem, 3.2vw, 3.75rem) var(--book-bottom);
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.book-scroll-cue {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #78532b;
+  transform: translateY(-50%);
+  animation: albumScrollCue 1.8s ease-in-out infinite;
+}
+
+.book-scroll-cue--left { left: 0; }
+.book-scroll-cue--right { right: 0; }
+.book-scroll-cue--right small { order: -1; }
+
+.book-scroll-cue i {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.book-scroll-cue--left i { transform: rotate(225deg); }
+.book-scroll-cue small {
+  margin-inline: 0.35rem;
+  font-size: calc(0.6rem + 2px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes albumScrollCue {
+  0%, 100% { opacity: 0.58; transform: translateY(calc(-50% - 5px)); }
+  50% { opacity: 1; transform: translateY(calc(-50% + 5px)); }
+}
+
+.memory-section[data-reduced-motion="true"] .book-scroll-cues { opacity: 1; }
 
 /* Width is capped by the stage's free height so the whole book always fits inside the pinned scene. */
 .book {
@@ -902,6 +950,9 @@ html[data-theme="dark"] .book-shadow {
       calc((100dvh - var(--book-top) - var(--book-bottom)) * 1.58)
     );
   }
+
+  .book-scroll-cues { inset-inline: 0.75rem; }
+  .book-scroll-cue small { display: none; }
 }
 
 @media (max-width: 700px) {
@@ -920,9 +971,13 @@ html[data-theme="dark"] .book-shadow {
   }
 
   .book-perspective {
-    --book-top: 5rem;
+    --book-top: 7rem;
     --book-bottom: 1.5rem;
   }
+
+  .book-scroll-cues { inset-inline: 0.45rem; }
+  .book-scroll-cue { gap: 0.3rem; }
+  .book-scroll-cue i { width: 0.58rem; height: 0.58rem; }
 
   .book {
     width: min(
@@ -1023,6 +1078,10 @@ html[data-theme="dark"] .book-shadow {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .book-scroll-cue { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
@@ -1091,4 +1150,3 @@ html[data-theme="dark"] .book-shadow {
     }
   }
 }
-
