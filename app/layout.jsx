@@ -1,4 +1,4 @@
-import { Bodoni_Moda, Cormorant_Garamond, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_URL } from "./seo-config";
 
@@ -6,24 +6,46 @@ const VENUE_ID = `${SITE_URL}/#venue`;
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
-const display = Cormorant_Garamond({
+const display = localFont({
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/cormorant-garamond-latin-normal.woff2",
+      weight: "400 600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/cormorant-garamond-latin-italic.woff2",
+      weight: "400 600",
+      style: "italic",
+    },
+  ],
 });
 
-const sans = Manrope({
+const sans = localFont({
   variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  src: "./fonts/manrope-latin-normal.woff2",
+  weight: "400 700",
+  style: "normal",
 });
 
-const artistic = Bodoni_Moda({
+const artistic = localFont({
   variable: "--font-artistic",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/bodoni-moda-latin-normal.woff2",
+      weight: "400 500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/bodoni-moda-latin-italic.woff2",
+      weight: "400 500",
+      style: "italic",
+    },
+  ],
 });
 
 export const metadata = {
