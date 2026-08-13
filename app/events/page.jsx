@@ -34,7 +34,7 @@ const page = {
       "/weddings"
     ],
     [
-      "Corporate Conferences",
+      "Conferences & Corporate",
       "Keynotes, breakout configurations, production-ready AV, catering, parking, and attached hotel accommodations.",
       "/home-assets/banner-4.jpg",
       "/corporate-conferences"

@@ -227,7 +227,7 @@ export default function ContactExperience() {
             <select id="inquiry-event-type" name="eventType" defaultValue="" required>
               <option value="" disabled>Select your occasion</option>
               <option>Wedding &amp; Reception</option>
-              <option>Corporate Conference</option>
+              <option>Conferences &amp; Corporate</option>
               <option>Meeting &amp; Seminar</option>
               <option>Gala &amp; Fundraiser</option>
               <option>Cultural &amp; Music Concert</option>

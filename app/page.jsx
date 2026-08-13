@@ -300,7 +300,7 @@ export default function Home() {
       <SiteHeader />
 
       <section className="hero" id="top">
-        <div className="hero-image" style={{ backgroundImage: `url("${homePageContent.hero.image}")` }}>
+        <div className="hero-image">
           <video
             ref={heroVideoRef}
             className="hero-video"
@@ -309,7 +309,6 @@ export default function Home() {
             loop
             playsInline
             preload="auto"
-            poster={homePageContent.hero.image}
             aria-hidden="true"
             onCanPlay={(event) => event.currentTarget.play()?.catch(() => {})}
             onLoadedData={(event) => event.currentTarget.play()?.catch(() => {})}

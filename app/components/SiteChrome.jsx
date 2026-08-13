@@ -156,7 +156,7 @@ export function SiteHeader() {
               </div>
               <div className="nav-submenu" id="events-submenu">
                 {eventLinks.map(([eventLabel, eventHref]) => (
-                  <a href={eventHref} onClick={closeMenu} key={eventHref}>{eventLabel === "Corporate Conferences" ? "Conferences & Corporate" : eventLabel}</a>
+                  <a href={eventHref} onClick={closeMenu} key={eventHref}>{eventLabel}</a>
                 ))}
               </div>
             </div>
