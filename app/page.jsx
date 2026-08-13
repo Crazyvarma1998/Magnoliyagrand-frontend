@@ -561,7 +561,7 @@ export default function Home() {
         <p>{homePageContent.finalCta.description}</p>
         <div className="final-actions">
           <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">{homePageContent.finalCta.primaryLabel} <span>↗</span></a>
-          <a className="text-link" href="mailto:sales@magnoliyagrand.com?subject=Magnoliya%20Grand%20Event%20Inquiry">{homePageContent.finalCta.secondaryLabel} <span>↗</span></a>
+          <a className="text-link" href="/contact">{homePageContent.finalCta.secondaryLabel} <span>↗</span></a>
         </div>
         <a className="contact-phone" href="tel:+17038435536">{homePageContent.finalCta.phoneLabel} +1 703 843 5536</a>
       </section>
