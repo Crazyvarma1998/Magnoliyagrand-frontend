@@ -12,6 +12,9 @@ const exactDimensions = {
 export function imageDimensions(src) {
   if (!src || typeof src !== "string") return { width: 1600, height: 1067 };
   if (exactDimensions[src]) return exactDimensions[src];
+  if (src === "/event-assets/gala-fundraiser.jpg") return { width: 1254, height: 1254 };
+  if (src === "/event-assets/milestone-celebrations.jpg") return { width: 1536, height: 1024 };
+  if (/\/event-assets\/event\d+\.jpg$/.test(src)) return { width: 550, height: 309 };
   if (/\/home-assets\/banner-\d+\.jpg$/.test(src)) return { width: 1920, height: 716 };
   if (/\/home-assets\/[^/]+\.jpg$/.test(src)) return { width: 640, height: 720 };
   const galleryMatch = src.match(/\/gallery\/img-(\d+)\.jpg$/);

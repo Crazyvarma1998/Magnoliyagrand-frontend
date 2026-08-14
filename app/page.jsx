@@ -263,7 +263,8 @@ export default function Home() {
         const section = document.querySelector(".manifesto");
         const stageSection = document.querySelector(".stage-section");
         const locationSection = document.querySelector(".location");
-        if (!section && !stageSection && !locationSection)
+        const occasionCards = document.querySelectorAll(".official-event-card");
+        if (!section && !stageSection && !locationSection && !occasionCards.length)
             return;
         const manifestoObserver = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
@@ -298,16 +299,29 @@ export default function Home() {
             threshold: 0.3,
             rootMargin: "-7% 0px -7% 0px",
         });
+        const occasionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    occasionObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: "0px 0px -6% 0px",
+        });
         if (section)
             manifestoObserver.observe(section);
         if (stageSection)
             stageObserver.observe(stageSection);
         if (locationSection)
             locationObserver.observe(locationSection);
+        occasionCards.forEach((card) => occasionObserver.observe(card));
         return () => {
             manifestoObserver.disconnect();
             stageObserver.disconnect();
             locationObserver.disconnect();
+            occasionObserver.disconnect();
         };
     }, []);
     return (<main>
@@ -455,10 +469,19 @@ export default function Home() {
         <div className="event-grid">
           {eventExperiences.map((event, index) => (<a
               href={event.href}
-              className={`event-card ${event.tone}`}
-              style={{ "--event-image": `url("${event.image}")`, "--event-delay": `${index * -1.15}s` }}
+              className={`event-card official-event-card ${event.tone}`}
+              style={{ "--event-image": `url("${event.image}")`, "--event-delay": `${index * -1.15}s`, "--event-index": index }}
               key={event.title}
             >
+              <img
+                {...imageDimensions(event.image)}
+                className="event-card-image"
+                src={event.image}
+                alt={`${event.title} at Magnoliya Grand`}
+                style={{ objectPosition: event.imagePosition || "center" }}
+                loading="lazy"
+                decoding="async"
+              />
               <div className="event-copy">
                 <h3>{event.title}</h3>
                 <p>{event.description}</p>
