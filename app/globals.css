@@ -4815,6 +4815,53 @@ main h3 br + em,
   .event-card .event-copy p { font-size: 13px; line-height: 1.58; }
 }
 
+/* Events card stack must clear the fixed utility bar and navigation at every
+   viewport. The card height is measured from that safe sticky position. */
+@media (min-width: 901px) {
+  .page-events .feature-page-grid article,
+  .page-events .feature-page-grid article:first-child,
+  .page-events .feature-page-grid article:nth-child(2),
+  .page-events .feature-page-grid article:nth-child(3),
+  .page-events .feature-page-grid article:nth-child(4),
+  .page-events .feature-page-grid article:nth-child(5),
+  .page-events .feature-page-grid article:nth-child(6),
+  .page-events .feature-page-grid article:nth-child(7) {
+    top: 118px !important;
+    height: clamp(430px,calc(100svh - 148px),690px);
+  }
+  .page-events .feature-page-grid::after {
+    flex-basis: calc(100svh - 148px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page-events .feature-page-grid article:nth-child(n) {
+    top: 108px !important;
+    height: clamp(500px,calc(100svh - 122px),680px);
+    max-height: calc(100svh - 122px);
+    grid-template-rows: minmax(190px,42%) minmax(0,58%);
+    margin-bottom: clamp(76px,12svh,118px);
+  }
+  .page-events .feature-page-grid article:nth-child(7) {
+    top: 108px !important;
+  }
+  .page-events .feature-page-grid::after {
+    flex-basis: calc(100svh - 122px);
+  }
+  .page-events .feature-page-grid article:nth-child(n) > div,
+  .page-events .feature-page-grid article:nth-child(even) > div {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .page-events .feature-page-grid article:nth-child(n) {
+    height: max(470px,calc(100svh - 118px));
+    max-height: calc(100svh - 118px);
+    grid-template-rows: minmax(180px,40%) minmax(0,60%);
+  }
+}
+
 @media (max-width: 900px) {
   .page-gallery .gallery-page-grid { grid-template-columns: repeat(2,minmax(0,1fr)); grid-auto-rows: 150px; padding: 70px 18px 100px; gap: 14px; }
   .page-gallery .gallery-page-grid figure,
