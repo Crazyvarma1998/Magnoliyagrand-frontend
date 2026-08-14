@@ -214,7 +214,7 @@ export const siteSettings = {
   socials: [
     ["Facebook", "https://www.facebook.com/magnoliyagrand/"],
     ["Instagram", "https://www.instagram.com/magnoliyagrand/"],
-    ["Twitter", "https://x.com/MagnoliyaGrand"],
+    ["X", "https://x.com/MagnoliyaGrand"],
     ["LinkedIn", "https://www.linkedin.com/in/magnoliya-grand-7727b92ab"],
     ["YouTube", "https://www.youtube.com/channel/UCNG6YVfx2i9b5O98vgE7rFw"],
     ["WhatsApp", "https://wa.me/17038435536"],

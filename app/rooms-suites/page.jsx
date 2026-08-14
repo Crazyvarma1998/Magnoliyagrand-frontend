@@ -8,7 +8,7 @@ const page = {
   // "eyebrow": "Stay close to every moment",
   "title": "More rooms. More convenience.",
   "accent": "One exceptional event destination.",
-  "description": "Your guests deserve a comfortable place to stay without having to travel far after celebrating.",
+  // "description": "Your guests deserve a comfortable place to stay without having to travel far after celebrating.",
   "heroImage": "/hotel-assets/hiltonbanner.jpeg",
   "introTitle": "Stay close. Celebrate fully.",
   "intro": "Magnoliya Grand offers two convenient hotel options within a short walk of the venue. Hilton Garden Inn is directly connected, while Courtyard by Marriott is just a few steps away with 149 additional guest rooms.",

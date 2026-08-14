@@ -7,7 +7,7 @@ import { imageDimensions } from "../image-data";
 import { headerSocialIcons } from "../social-icons";
 import FooterVideoText from "./FooterVideoText";
 
-const headerSocialLabels = ["Facebook", "Instagram", "Twitter", "TikTok"];
+const headerSocialLabels = ["Facebook", "Instagram", "X", "TikTok"];
 
 function SocialIcon({ label }) {
   const icon = headerSocialIcons[label];
@@ -43,11 +43,10 @@ function SocialIcon({ label }) {
     );
   }
 
-  if (label === "Twitter") {
+  if (label === "X") {
     return (
-      <svg className="brand-social-svg brand-social-twitter" viewBox="0 0 24 24" aria-hidden="true">
-        <rect width="24" height="24" rx="5.6" fill="#1d9bf0" />
-        <path className="brand-social-inset brand-social-white" d={icon.path} />
+      <svg className="brand-social-svg brand-social-x" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#fff" d={icon.path} />
       </svg>
     );
   }
