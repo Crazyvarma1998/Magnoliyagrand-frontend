@@ -424,7 +424,7 @@ export default function InteriorPage({ slug, page, planningFacts, seoTitle }) {
         </>
       )}
 
-      {page.introTitle && page.intro && !["blog", "contact", "venue"].includes(slug) && (<section className="page-intro">
+      {page.introTitle && page.intro && !["blog", "contact", "venue","services"].includes(slug) && (<section className="page-intro">
         <div>
           <p className="section-kicker">Magnoliya Grand · Manassas, Virginia</p>
           <h2>{page.introTitle}</h2>
