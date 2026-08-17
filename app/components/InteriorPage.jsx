@@ -242,13 +242,13 @@ function ServicesShowcase({ items }) {
 
   return (
     <section className="services-showcase" aria-labelledby="services-showcase-title">
-      <header className="services-showcase__header">
+      {/* <header className="services-showcase__header">
         <div>
           <p className="section-kicker">Designed around your occasion</p>
           <h2 id="services-showcase-title">Expert partners.<br /><em>Seamless execution.</em></h2>
         </div>
         <p>From the first planning conversation to the final cue, every service is brought together around your guests, your priorities, and your vision.</p>
-      </header>
+      </header> */}
       <div className="services-showcase__list">
         {items.map((item) => (
           <article className={`service-detail-card${item.imageFit === "contain" ? " service-detail-card--contain" : ""}`} key={item.title}>
