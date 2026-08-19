@@ -224,8 +224,7 @@ export const siteSettings = {
     kicker: "Your date is waiting",
     title: "Make the room become your occasion.",
     description: "Tell us what you're imagining. We'll show you what's possible.",
-    primaryLabel: "Submit booking request",
-    secondaryLabel: "Contact the events team",
-    secondaryHref: "/contact",
+    primaryLabel: "Schedule a Tour",
+    primaryHref: "/contact",
   },
 };

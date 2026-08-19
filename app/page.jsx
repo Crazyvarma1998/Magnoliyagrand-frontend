@@ -186,10 +186,8 @@ const defaultHomePageContent = {
     "title": "Let's make the room",
     "accent": "become your occasion.",
     "description": "Tell us what you're imagining. We'll show you what's possible.",
-    "primaryLabel": "Submit booking request",
-    "primaryHref": "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062",
-    "secondaryLabel": "Contact the events team",
-    "secondaryHref": "/contact",
+    "primaryLabel": "Schedule a Tour",
+    "primaryHref": "/contact",
     "phoneLabel": "Prefer to talk?"
   },
   "events": {
@@ -200,10 +198,15 @@ const defaultHomePageContent = {
   }
 };
 
-const bookingUrl = "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062";
 const homeFaqs = sharedFaqs.slice(0, 4);
 export default function Home() {
     const homePageContent = useCmsPage("home", defaultHomePageContent);
+    const finalCtaLabel = homePageContent.finalCta.primaryLabel === "Submit booking request"
+        ? "Schedule a Tour"
+        : homePageContent.finalCta.primaryLabel || "Schedule a Tour";
+    const finalCtaHref = homePageContent.finalCta.primaryHref?.includes("tripleseat.com/booking_request")
+        ? "/contact"
+        : homePageContent.finalCta.primaryHref || "/contact";
     const [videoOpen, setVideoOpen] = useState(false);
     const [heroVideoReady, setHeroVideoReady] = useState(false);
     const heroVideoRef = useRef(null);
@@ -588,8 +591,7 @@ export default function Home() {
         <h2>{homePageContent.finalCta.title}<br /><em>{homePageContent.finalCta.accent}</em></h2>
         <p>{homePageContent.finalCta.description}</p>
         <div className="final-actions">
-          <a className="button button-gold" href={homePageContent.finalCta.primaryHref || bookingUrl} target="_blank" rel="noreferrer">{homePageContent.finalCta.primaryLabel} <span>↗</span></a>
-          <a className="text-link" href={homePageContent.finalCta.secondaryHref || "/contact"}>{homePageContent.finalCta.secondaryLabel} <span>↗</span></a>
+          <a className="button button-gold" href={finalCtaHref}>{finalCtaLabel} <span>→</span></a>
         </div>
         <a className="contact-phone" href="tel:+17038435536">{homePageContent.finalCta.phoneLabel} +1 703 843 5536</a>
       </section>

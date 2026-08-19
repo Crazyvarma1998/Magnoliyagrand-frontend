@@ -255,7 +255,7 @@ export function SiteFooter() {
 }
 
 export function BookingBand({ title }) {
-  const { siteSettings, bookingUrl } = useSharedContent();
+  const { siteSettings } = useSharedContent();
   const resolvedTitle = title || siteSettings.bookingBand.title;
   return (
     <section className="page-booking">
@@ -263,8 +263,7 @@ export function BookingBand({ title }) {
       <h2>{resolvedTitle}</h2>
       <p>{siteSettings.bookingBand.description}</p>
       <div className="final-actions">
-        <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">{siteSettings.bookingBand.primaryLabel} <span>↗</span></a>
-        <a className="text-link" href={siteSettings.bookingBand.secondaryHref}>{siteSettings.bookingBand.secondaryLabel} <span>↗</span></a>
+        <Link className="button button-gold" href={siteSettings.bookingBand.primaryHref || "/contact"}>{siteSettings.bookingBand.primaryLabel || "Schedule a Tour"} <span>→</span></Link>
       </div>
     </section>
   );
