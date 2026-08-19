@@ -1,4 +1,4 @@
-import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+ baby shower,import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
 
 const slug = "milestone-celebrations";
 const seoTitle = "Celebration Venue in Manassas, VA | Magnoliya Grand";
@@ -8,10 +8,10 @@ const page = {
   "eyebrow": "Milestone celebrations",
   "title": "Life's biggest moments,",
   "accent": "made magnificent.",
-  "description": "An elegant venue for quinceañeras, anniversaries, birthdays, proms, and milestone celebrations in Manassas, Virginia.",
+  "description": "An elegant venue for quinceañeras, anniversaries, birthdays, proms, baby shower, and milestone celebrations in Manassas, Virginia.",
   "heroImage": "/home-assets/banner-12.jpg",
   "introTitle": "A setting worthy of the moment",
-  "intro": "Celebrate quinceañeras, anniversaries, birthdays, proms, graduations, and family milestones with dramatic scale, personal service, and room for every tradition.",
+  "intro": "Celebrate quinceañeras, anniversaries, birthdays, proms, graduations, baby shower, and family milestones with dramatic scale, personal service, and room for every tradition.",
   "highlights": [
     {
       "value": "1,200",
