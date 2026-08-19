@@ -155,7 +155,7 @@ function ReducedCelebrations({ celebrations }) {
   );
 }
 
-export default function CelebrationBook({ features }) {
+export default function CelebrationBook({ features, cta = {} }) {
   const celebrations = createCelebrations(features);
   const rootRef = useRef(null);
   const stageRef = useRef(null);
@@ -627,8 +627,8 @@ export default function CelebrationBook({ features }) {
             <p className="eyebrow">14,500 square feet · Up to 2,000 guests</p>
             <h2>One venue.<br />Endless possibilities.</h2>
             <p>From professional planning and refined hospitality to flexible spaces and modern technology, every event begins here.</p>
-            <a className="button button--dark" href={site.bookingUrl} target="_blank" rel="noreferrer">
-              Explore our spaces <ArrowIcon />
+            <a className="button button--dark" href={cta.href || site.bookingUrl} target={cta.newTab === false ? undefined : "_blank"} rel={cta.newTab === false ? undefined : "noreferrer"}>
+              {cta.label || "Explore our spaces"} <ArrowIcon />
             </a>
           </div>
         </div>

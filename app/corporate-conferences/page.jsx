@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "corporate-conferences";
 const seoTitle = "Conference Venue Near Dulles | Magnoliya Grand";
@@ -10,6 +11,8 @@ const page = {
   "accent": "a room with presence.",
   "description": "A full-service conference venue near Dulles Airport and Washington, D.C. with a 2,000-seat ballroom, breakout configurations, AV, Wi-Fi, catering, and hotel access.",
   "heroImage": "/home-assets/banner-4.jpg",
+  "editorialLinkLabel": "Plan your event",
+  "editorialLinkHref": "/contact",
   "introTitle": "A conference venue designed for momentum",
   "intro": "Bring keynotes, breakouts, dining, networking, and overnight accommodations together at one accessible Manassas destination. The Magna Ballroom scales from focused company meetings to 2,000-person programs.",
   "highlights": [
@@ -69,8 +72,19 @@ const planningFacts = {
   ]
 };
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function CorporateConferencesPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function CorporateConferencesPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={cmsPage.planningFacts || planningFacts} seoTitle={seoTitle} />;
 }

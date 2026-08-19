@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "features";
 const seoTitle = "Event Venue Amenities & Services | Magnoliya Grand";
@@ -10,6 +11,11 @@ const page = {
   "accent": "beautifully connected.",
   "description": "Discover the catering, technology, hotel access, parking, private suites, waterfront spaces, and planning support at Magnoliya Grand.",
   "heroImage": "/home-assets/5-landscaped-garden.jpg",
+  "featureCta": {
+    "label": "Explore our spaces",
+    "href": "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062",
+    "newTab": true
+  },
   "featureGrid": [
     [
       "Expansive Ballroom",
@@ -61,8 +67,19 @@ const page = {
 
 const planningFacts = null;
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function FeaturesPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function FeaturesPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={planningFacts} seoTitle={seoTitle} />;
 }

@@ -40,6 +40,15 @@ export async function POST(request) {
       return Response.json({ error: "Please enter a valid estimated guest count." }, { status: 400 });
     }
 
+    const cmsApiUrl = process.env.CMS_API_URL || process.env.NEXT_PUBLIC_CMS_API_URL;
+    if (cmsApiUrl) {
+      await fetch(`${cmsApiUrl.replace(/\/$/, "")}/public/inquiries`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name: inquiry.name, email: inquiry.email, phone: inquiry.phone, eventType: inquiry.eventType, preferredDate: inquiry.date, guestCount: guests, message: inquiry.message }),
+      }).catch((error) => console.error("CMS inquiry storage failed", error));
+    }
+
     const apiKey = process.env.RESEND_API_KEY;
     const from = process.env.CONTACT_FROM_EMAIL;
     const to = process.env.CONTACT_TO_EMAIL || "sales@magnoliyagrand.com";

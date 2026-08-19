@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "cultural-music-concerts";
 const seoTitle = "Concert & Cultural Event Venue | Magnoliya Grand";
@@ -10,6 +11,8 @@ const page = {
   "accent": "a grand stage.",
   "description": "A 2,000-seat cultural and music concert venue in Northern Virginia with advanced audiovisual capabilities, green rooms, parking, catering, and hotel access.",
   "heroImage": "/home-assets/banner-8.jpg",
+  "editorialLinkLabel": "Plan your event",
+  "editorialLinkHref": "/contact",
   "introTitle": "A Northern Virginia stage built for shared experience",
   "intro": "Present concerts, cultural programs, community celebrations, and large-scale performances in a flexible ballroom with theater seating for up to 2,000 attendees.",
   "highlights": [
@@ -69,8 +72,19 @@ const planningFacts = {
   ]
 };
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function CulturalMusicConcertsPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function CulturalMusicConcertsPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={cmsPage.planningFacts || planningFacts} seoTitle={seoTitle} />;
 }

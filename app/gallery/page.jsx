@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "gallery";
 const seoTitle = "Magnoliya Grand Venue Gallery | Manassas, Virginia";
@@ -52,8 +53,19 @@ const page = {
 
 const planningFacts = null;
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function GalleryPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function GalleryPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={planningFacts} seoTitle={seoTitle} />;
 }

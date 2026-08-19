@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { bookingUrl, siteSettings } from "../site-data";
+import { bookingUrl as defaultBookingUrl, siteSettings as defaultSiteSettings } from "../site-data";
+import { useCmsBootstrap } from "../hooks/useCmsPage";
 
-const headline = ["Every", "unforgettable", "event", "starts", "with", "hello."];
+const defaultHeadline = ["Every", "unforgettable", "event", "starts", "with", "hello."];
 
-export default function ContactExperience() {
+export default function ContactExperience({ content = {} }) {
+  const bootstrap = useCmsBootstrap({ settings: {} });
+  const siteSettings = bootstrap.settings?.site || defaultSiteSettings;
+  const bookingUrl = bootstrap.settings?.bookingUrl?.value || defaultBookingUrl;
+  const headline = content.headline || defaultHeadline;
   const sectionRef = useRef(null);
   const mapCanvasRef = useRef(null);
   const inquiryRef = useRef(null);
@@ -141,7 +146,7 @@ export default function ContactExperience() {
       <div className="contact-experience__glow" aria-hidden="true" />
 
       <header className="contact-experience__header">
-        <p className="contact-experience__eyebrow"><span /> Private event concierge</p>
+        <p className="contact-experience__eyebrow"><span /> {content.eyebrow || "Private event concierge"}</p>
         <h2 aria-label="Every unforgettable event starts with hello.">
           {headline.map((word, index) => (
             <span className={word === "unforgettable" || word === "hello." ? "accent" : ""} key={word}>
@@ -150,37 +155,37 @@ export default function ContactExperience() {
           ))}
         </h2>
         <p className="contact-experience__intro">
-          Share your date, guest count, and vision. Our events team will shape the right space, flow, and next step around your occasion.
+          {content.intro || "Share your date, guest count, and vision. Our events team will shape the right space, flow, and next step around your occasion."}
         </p>
       </header>
 
       <div className="contact-experience__body">
         <article className="contact-concierge">
           <div className="contact-concierge__top">
-            <span>Start a conversation</span>
+            <span>{content.conversationLabel || "Start a conversation"}</span>
             <i aria-hidden="true">MG</i>
           </div>
 
           <a className="contact-concierge__link" href={siteSettings.contact.phoneHref}>
-            <small>Call the events team</small>
+            <small>{content.phoneLabel || "Call the events team"}</small>
             <strong>{siteSettings.contact.phone}</strong>
             <span aria-hidden="true">↗</span>
           </a>
           <a className="contact-concierge__link" href={siteSettings.contact.emailHref}>
-            <small>Send your vision</small>
+            <small>{content.emailLabel || "Send your vision"}</small>
             <strong>{siteSettings.contact.email}</strong>
             <span aria-hidden="true">↗</span>
           </a>
 
           <div className="contact-concierge__address">
-            <small>Visit Magnoliya Grand</small>
+            <small>{content.addressLabel || "Visit Magnoliya Grand"}</small>
             <p>{siteSettings.contact.street}<br />{siteSettings.contact.city}</p>
-            <span>Minutes from Dulles Airport</span>
+            <span>{content.distanceLabel || "Minutes from Dulles Airport"}</span>
           </div>
 
           <div className="contact-concierge__actions">
-            <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">Request your date ↗</a>
-            <a className="contact-direction-link" href={siteSettings.contact.directions} target="_blank" rel="noreferrer">Get directions <span>↗</span></a>
+            <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">{content.requestLabel || "Request your date"} ↗</a>
+            <a className="contact-direction-link" href={siteSettings.contact.directions} target="_blank" rel="noreferrer">{content.directionsLabel || "Get directions"} <span>↗</span></a>
           </div>
         </article>
 
@@ -188,24 +193,24 @@ export default function ContactExperience() {
           <div ref={mapCanvasRef} className="contact-map-canvas" aria-label="Interactive satellite map flying to Magnoliya Grand in Manassas, Virginia" />
           <div className="contact-map-vignette" aria-hidden="true" />
           <div className="contact-map-details">
-            <small>Live satellite destination</small>
-            <strong>Magnoliya Grand</strong>
-            <span>38.80515° N · 77.51532° W</span>
+            <small>{content.mapLabel || "Live satellite destination"}</small>
+            <strong>{content.mapName || "Magnoliya Grand"}</strong>
+            <span>{content.coordinates || "38.80515° N · 77.51532° W"}</span>
           </div>
           <a className="contact-map-open" href={siteSettings.contact.directions} target="_blank" rel="noreferrer">
-            Open live map <span>↗</span>
+            {content.mapLinkLabel || "Open live map"} <span>↗</span>
           </a>
         </div>
       </div>
 
       <section className="contact-inquiry" ref={inquiryRef} aria-labelledby="contact-inquiry-title">
         <div className="contact-inquiry__intro">
-          <p className="section-kicker">Begin your event</p>
-          <h3 id="contact-inquiry-title">Tell us what<br /><em>you are imagining.</em></h3>
-          <p>Share the essentials and our events team will follow up with availability, thoughtful recommendations, and the next steps for a private tour.</p>
+          <p className="section-kicker">{content.formKicker || "Begin your event"}</p>
+          <h3 id="contact-inquiry-title">{content.formTitle || "Tell us what"}<br /><em>{content.formAccent || "you are imagining."}</em></h3>
+          <p>{content.formIntro || "Share the essentials and our events team will follow up with availability, thoughtful recommendations, and the next steps for a private tour."}</p>
           <div className="contact-inquiry__promise">
-            <span>Personal response</span>
-            <strong>Typically within 24 hours</strong>
+            <span>{content.responseLabel || "Personal response"}</span>
+            <strong>{content.responseValue || "Typically within 24 hours"}</strong>
           </div>
         </div>
 
@@ -254,7 +259,7 @@ export default function ContactExperience() {
           </div>
           <div className="contact-inquiry__submit inquiry-field--wide">
             <button className="button button-gold" type="submit" disabled={formStatus.state === "sending"}>
-              {formStatus.state === "sending" ? "Sending…" : "Send your inquiry"} <span aria-hidden="true">↗</span>
+              {formStatus.state === "sending" ? "Sending…" : (content.submitLabel || "Send your inquiry")} <span aria-hidden="true">↗</span>
             </button>
             <p className={`contact-inquiry__status is-${formStatus.state}`} role="status" aria-live="polite">{formStatus.message}</p>
           </div>
@@ -262,9 +267,7 @@ export default function ContactExperience() {
       </section>
 
       <div className="contact-journey" aria-label="Planning journey">
-        <div><span>Imagine</span><p>Tell us the occasion, date, and atmosphere you have in mind.</p></div>
-        <div><span>Visit</span><p>Walk the venue with a specialist and explore the right setting.</p></div>
-        <div><span>Celebrate</span><p>Bring your gathering to life with a team focused on every detail.</p></div>
+        {(content.journey || [["Imagine", "Tell us the occasion, date, and atmosphere you have in mind."], ["Visit", "Walk the venue with a specialist and explore the right setting."], ["Celebrate", "Bring your gathering to life with a team focused on every detail."]]).map(([title, body]) => <div key={title}><span>{title}</span><p>{body}</p></div>)}
       </div>
     </section>
   );

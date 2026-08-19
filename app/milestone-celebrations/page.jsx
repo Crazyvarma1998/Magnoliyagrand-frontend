@@ -1,4 +1,5 @@
- baby shower,import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "milestone-celebrations";
 const seoTitle = "Celebration Venue in Manassas, VA | Magnoliya Grand";
@@ -8,10 +9,12 @@ const page = {
   "eyebrow": "Milestone celebrations",
   "title": "Life's biggest moments,",
   "accent": "made magnificent.",
-  "description": "An elegant venue for quinceañeras, anniversaries, birthdays, proms, baby shower, and milestone celebrations in Manassas, Virginia.",
+  "description": "An elegant venue for quinceañeras, anniversaries, birthdays, baby showers, proms, and milestone celebrations in Manassas, Virginia.",
   "heroImage": "/home-assets/banner-12.jpg",
+  "editorialLinkLabel": "Plan your event",
+  "editorialLinkHref": "/contact",
   "introTitle": "A setting worthy of the moment",
-  "intro": "Celebrate quinceañeras, anniversaries, birthdays, proms, graduations, baby shower, and family milestones with dramatic scale, personal service, and room for every tradition.",
+  "intro": "Celebrate quinceañeras, anniversaries, birthdays, baby showers, proms, graduations, and family milestones with dramatic scale, personal service, and room for every tradition.",
   "highlights": [
     {
       "value": "1,200",
@@ -44,7 +47,7 @@ const page = {
 
 const planningFacts = {
   "title": "Celebration planning essentials",
-  "summary": "Shape birthdays, anniversaries, quinceaneras, proms, graduations, and family milestones around your guest list and traditions.",
+  "summary": "Shape birthdays, baby showers, anniversaries, quinceaneras, proms, graduations, and family milestones around your guest list and traditions.",
   "items": [
     [
       "Banquet capacity",
@@ -69,8 +72,19 @@ const planningFacts = {
   ]
 };
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function MilestoneCelebrationsPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function MilestoneCelebrationsPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={cmsPage.planningFacts || planningFacts} seoTitle={seoTitle} />;
 }

@@ -4,7 +4,8 @@ import { eventExperiences, sharedAboutContent, sharedFaqs } from "./site-data";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import LocationGlobe from "./components/LocationGlobe";
 import { imageDimensions } from "./image-data";
-const homePageContent = {
+import { useCmsPage } from "./hooks/useCmsPage";
+const defaultHomePageContent = {
   "hero": {
     "location": "Manassas, Virginia",
     "titleLines": [
@@ -177,7 +178,8 @@ const homePageContent = {
         "steps to Hilton"
       ]
     ],
-    "buttonLabel": "Get directions"
+    "buttonLabel": "Get directions",
+    "buttonHref": "https://maps.google.com/?q=7001+Infantry+Ridge+Rd+Manassas+VA+20109"
   },
   "finalCta": {
     "kicker": "Your date is waiting",
@@ -185,7 +187,9 @@ const homePageContent = {
     "accent": "become your occasion.",
     "description": "Tell us what you're imagining. We'll show you what's possible.",
     "primaryLabel": "Submit booking request",
+    "primaryHref": "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062",
     "secondaryLabel": "Contact the events team",
+    "secondaryHref": "/contact",
     "phoneLabel": "Prefer to talk?"
   },
   "events": {
@@ -199,6 +203,7 @@ const homePageContent = {
 const bookingUrl = "https://magnoliyagrandmanorconferenceandeventcenter.tripleseat.com/booking_request/35062";
 const homeFaqs = sharedFaqs.slice(0, 4);
 export default function Home() {
+    const homePageContent = useCmsPage("home", defaultHomePageContent);
     const [videoOpen, setVideoOpen] = useState(false);
     const [heroVideoReady, setHeroVideoReady] = useState(false);
     const heroVideoRef = useRef(null);
@@ -372,7 +377,7 @@ export default function Home() {
             <p>{sharedAboutContent.homeSummary}</p>
             <p>{sharedAboutContent.serviceSummary}</p>
           </div>
-          <a className="line-link dark-link manifesto-link" href="/about">Discover our story <span>↗</span></a>
+          <a className="line-link dark-link manifesto-link" href={homePageContent.aboutButton.href}>{homePageContent.aboutButton.label} <span>↗</span></a>
         </div>
       </section>
 
@@ -544,7 +549,7 @@ export default function Home() {
           <p className="section-kicker">{homePageContent.faq.kicker}</p>
           <h2>{homePageContent.faq.title}<br /><em>{homePageContent.faq.accent}</em></h2>
           <p className="home-faq-intro">{homePageContent.faq.description}</p>
-          <a className="line-link dark-link" href="/faq">View all frequently asked questions <span>↗</span></a>
+          <a className="line-link dark-link" href={homePageContent.faq.button?.href || "/faq"}>{homePageContent.faq.button?.label || "View all frequently asked questions"} <span>↗</span></a>
         </div>
         <div className="faq-list">
           {homeFaqs.map(([question, answer], index) => (
@@ -573,7 +578,7 @@ export default function Home() {
               <div key={label}><strong>{value}</strong><span>{label}</span></div>
             ))}
           </div>
-          <a className="line-link" href="https://maps.google.com/?q=7001+Infantry+Ridge+Rd+Manassas+VA+20109">{homePageContent.location.buttonLabel} <span>↗</span></a>
+          <a className="line-link" href={homePageContent.location.buttonHref || "https://maps.google.com/?q=7001+Infantry+Ridge+Rd+Manassas+VA+20109"}>{homePageContent.location.buttonLabel} <span>↗</span></a>
         </div>
       </section>
 
@@ -583,8 +588,8 @@ export default function Home() {
         <h2>{homePageContent.finalCta.title}<br /><em>{homePageContent.finalCta.accent}</em></h2>
         <p>{homePageContent.finalCta.description}</p>
         <div className="final-actions">
-          <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">{homePageContent.finalCta.primaryLabel} <span>↗</span></a>
-          <a className="text-link" href="/contact">{homePageContent.finalCta.secondaryLabel} <span>↗</span></a>
+          <a className="button button-gold" href={homePageContent.finalCta.primaryHref || bookingUrl} target="_blank" rel="noreferrer">{homePageContent.finalCta.primaryLabel} <span>↗</span></a>
+          <a className="text-link" href={homePageContent.finalCta.secondaryHref || "/contact"}>{homePageContent.finalCta.secondaryLabel} <span>↗</span></a>
         </div>
         <a className="contact-phone" href="tel:+17038435536">{homePageContent.finalCta.phoneLabel} +1 703 843 5536</a>
       </section>

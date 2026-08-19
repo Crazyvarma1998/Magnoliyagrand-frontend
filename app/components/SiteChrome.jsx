@@ -2,10 +2,32 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
-import { bookingUrl, eventLinks, siteSettings } from "../site-data";
+import { bookingUrl as defaultBookingUrl, eventLinks as defaultEventLinks, siteSettings as defaultSiteSettings } from "../site-data";
 import { imageDimensions } from "../image-data";
 import { headerSocialIcons } from "../social-icons";
 import FooterVideoText from "./FooterVideoText";
+import { useCmsBootstrap } from "../hooks/useCmsPage";
+
+function useSharedContent() {
+  const bootstrap = useCmsBootstrap({ settings: {} });
+  const siteSettings = bootstrap.settings?.site || defaultSiteSettings;
+  const eventLinks = bootstrap.settings?.eventExperiences
+    ?.filter((item) => item.isVisible !== false)
+    .map(({ title, href }) => [title, href]) || defaultEventLinks;
+  const bookingUrl = bootstrap.settings?.bookingUrl?.value || defaultBookingUrl;
+  const toMenuItems = (items, fallback) => items?.length
+    ? items.filter((item) => item.isVisible !== false).map((item) => ({ ...item, children: (item.children || []).filter((child) => child.isVisible !== false) }))
+    : fallback.map(([label, url]) => ({ label, url, target: "_self", children: [] }));
+  const headerNavigation = toMenuItems(bootstrap.menus?.header, defaultSiteSettings.navigation);
+  const footerNavigation = toMenuItems(bootstrap.menus?.footer, defaultSiteSettings.footerNavigation);
+  const buttons = {
+    headerBookingLabel: "Booking request",
+    footerPlanLabel: "Plan an event",
+    footerContactLabel: "Start your event",
+    ...siteSettings.buttons,
+  };
+  return { siteSettings, eventLinks, bookingUrl, headerNavigation, footerNavigation, buttons };
+}
 
 const headerSocialLabels = ["Facebook", "Instagram", "X", "TikTok"];
 
@@ -92,11 +114,12 @@ function SocialIcon({ label }) {
 }
 
 export function SiteHeader() {
+  const { siteSettings, eventLinks, bookingUrl, headerNavigation, buttons } = useSharedContent();
   const [open, setOpen] = useState(false);
-  const [eventsOpen, setEventsOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
   const closeMenu = () => {
     setOpen(false);
-    setEventsOpen(false);
+    setOpenSubmenu(null);
   };
 
   return (
@@ -138,37 +161,41 @@ export function SiteHeader() {
           />
         </Link>
         <nav className={open ? "nav-links open" : "nav-links"} aria-label="Primary navigation">
-          {siteSettings.navigation.map(([label, href]) => label === "Events" ? (
-            <div className={`nav-item nav-item-events${eventsOpen ? " is-open" : ""}`} key={`${label}-${href}`}>
+          {headerNavigation.map((item) => {
+            const submenu = item.children?.length ? item.children : item.label === "Events" ? eventLinks.map(([label, url]) => ({ label, url, target: "_self" })) : [];
+            const itemKey = `${item.label}-${item.url}`;
+            const submenuOpen = openSubmenu === itemKey;
+            return submenu.length ? (
+            <div className={`nav-item nav-item-events${submenuOpen ? " is-open" : ""}`} key={itemKey}>
               <div className="nav-parent-row">
-                <a href={href} onClick={closeMenu}>{label}</a>
+                <a href={item.url} target={item.target} rel={item.target === "_blank" ? "noreferrer" : undefined} onClick={closeMenu}>{item.label}</a>
                 <button
                   className="submenu-toggle"
                   type="button"
-                  aria-expanded={eventsOpen}
-                  aria-controls="events-submenu"
-                  aria-label={`${eventsOpen ? "Close" : "Open"} event types menu`}
-                  onClick={() => setEventsOpen((current) => !current)}
+                  aria-expanded={submenuOpen}
+                  aria-controls={`submenu-${itemKey.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`}
+                  aria-label={`${submenuOpen ? "Close" : "Open"} ${item.label} submenu`}
+                  onClick={() => setOpenSubmenu((current) => current === itemKey ? null : itemKey)}
                 >
                   <span aria-hidden="true">+</span>
                 </button>
               </div>
-              <div className="nav-submenu" id="events-submenu">
-                {eventLinks.map(([eventLabel, eventHref]) => (
-                  <a href={eventHref} onClick={closeMenu} key={eventHref}>{eventLabel}</a>
+              <div className="nav-submenu" id={`submenu-${itemKey.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`}>
+                {submenu.map((child) => (
+                  <a href={child.url} target={child.target} rel={child.target === "_blank" ? "noreferrer" : undefined} onClick={closeMenu} key={`${child.label}-${child.url}`}>{child.label}</a>
                 ))}
               </div>
             </div>
           ) : (
-            <a className={label === "Contact" ? "nav-contact-link" : undefined} href={href} onClick={closeMenu} key={`${label}-${href}`}>{label}</a>
-          ))}
+            <a className={item.label === "Contact" ? "nav-contact-link" : undefined} href={item.url} target={item.target} rel={item.target === "_blank" ? "noreferrer" : undefined} onClick={closeMenu} key={itemKey}>{item.label}</a>
+          );})}
           <div className="nav-mobile-contact">
             <a href={siteSettings.contact.phoneHref}>Call {siteSettings.contact.phone}</a>
             <a href={siteSettings.contact.gmailHref} target="_blank" rel="noreferrer">Email {siteSettings.contact.email}</a>
           </div>
         </nav>
-        <a className="nav-cta" href={bookingUrl} target="_blank" rel="noreferrer">Booking request <span>↗</span></a>
-        <button className="menu-button" onClick={() => { setOpen(!open); if (open) setEventsOpen(false); }} aria-expanded={open} aria-label="Toggle menu">
+        <a className="nav-cta" href={bookingUrl} target="_blank" rel="noreferrer">{buttons.headerBookingLabel} <span>↗</span></a>
+        <button className="menu-button" onClick={() => { setOpen(!open); if (open) setOpenSubmenu(null); }} aria-expanded={open} aria-label="Toggle menu">
           <span /><span />
         </button>
       </header>
@@ -177,6 +204,7 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const { siteSettings, eventLinks, bookingUrl, footerNavigation, buttons } = useSharedContent();
   return (
     <footer className="site-footer" id="contact">
       <FooterVideoText />
@@ -195,15 +223,15 @@ export function SiteFooter() {
         </div>
         <nav className="footer-column footer-explore" aria-label="Footer navigation">
           <p className="footer-label">Explore</p>
-          {siteSettings.footerNavigation.slice(0, 7).map(([label, href]) => <a href={href} key={href}><span>{label}</span><i>↗</i></a>)}
-          <a href={bookingUrl} target="_blank" rel="noreferrer"><span>Plan an event</span><i>↗</i></a>
+          {footerNavigation.slice(0, 7).map((item) => <a href={item.url} target={item.target} rel={item.target === "_blank" ? "noreferrer" : undefined} key={`${item.label}-${item.url}`}><span>{item.label}</span><i>↗</i></a>)}
+          <a href={bookingUrl} target="_blank" rel="noreferrer"><span>{buttons.footerPlanLabel}</span><i>↗</i></a>
         </nav>
         <div className="footer-column footer-contact">
           <p className="footer-label">Find us</p>
           <a href={siteSettings.contact.phoneHref}>{siteSettings.contact.phone}</a>
           <a href={siteSettings.contact.emailHref}>{siteSettings.contact.email}</a>
           <a href={siteSettings.contact.directions} target="_blank" rel="noreferrer">{siteSettings.contact.street}<br />{siteSettings.contact.city}</a>
-          <a className="footer-enquire" href={bookingUrl} target="_blank" rel="noreferrer">Start your event <span>↗</span></a>
+          <a className="footer-enquire" href={bookingUrl} target="_blank" rel="noreferrer">{buttons.footerContactLabel} <span>↗</span></a>
         </div>
       </div>
       <nav className="footer-events-row" aria-label="Event types">
@@ -226,15 +254,17 @@ export function SiteFooter() {
   );
 }
 
-export function BookingBand({ title = siteSettings.bookingBand.title }) {
+export function BookingBand({ title }) {
+  const { siteSettings, bookingUrl } = useSharedContent();
+  const resolvedTitle = title || siteSettings.bookingBand.title;
   return (
     <section className="page-booking">
       <p className="section-kicker light">{siteSettings.bookingBand.kicker}</p>
-      <h2>{title}</h2>
+      <h2>{resolvedTitle}</h2>
       <p>{siteSettings.bookingBand.description}</p>
       <div className="final-actions">
-        <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">Submit booking request <span>↗</span></a>
-        <a className="text-link" href="/contact">Contact the events team <span>↗</span></a>
+        <a className="button button-gold" href={bookingUrl} target="_blank" rel="noreferrer">{siteSettings.bookingBand.primaryLabel} <span>↗</span></a>
+        <a className="text-link" href={siteSettings.bookingBand.secondaryHref}>{siteSettings.bookingBand.secondaryLabel} <span>↗</span></a>
       </div>
     </section>
   );

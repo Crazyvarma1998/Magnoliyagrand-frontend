@@ -157,7 +157,7 @@ function Stats({ items }) {
   );
 }
 
-function EditorialSections({ sections }) {
+function EditorialSections({ sections, linkLabel = "Plan your event", linkHref = "/contact" }) {
   if (!sections) return null;
   return (
     <section className="page-editorial">
@@ -170,7 +170,7 @@ function EditorialSections({ sections }) {
             <p className="section-kicker">{section.kicker}</p>
             <h2>{section.title}</h2>
             <p>{section.body}</p>
-            <a className="line-link dark-link" href="/contact">Plan your event <span>↗</span></a>
+            <a className="line-link dark-link" href={section.linkHref || linkHref}>{section.linkLabel || linkLabel} <span>↗</span></a>
           </div>
         </article>
       ))}
@@ -350,6 +350,37 @@ function Hotel360Tour() {
   );
 }
 
+function CourtyardSpotlight({ content }) {
+  if (!content) return null;
+  return (
+    <section className="courtyard-spotlight" aria-labelledby="courtyard-spotlight-title">
+      <div className="courtyard-spotlight__image">
+        <img
+          src={content.image}
+          alt={content.imageAlt || "Courtyard by Marriott Manassas Battlefield Park exterior"}
+          width={content.imageWidth || 1672}
+          height={content.imageHeight || 941}
+          loading="lazy"
+          decoding="async"
+        />
+        <span aria-hidden="true">Stay nearby</span>
+      </div>
+      <div className="courtyard-spotlight__copy">
+        <p className="section-kicker">{content.eyebrow || "Another place to stay"}</p>
+        <h2 id="courtyard-spotlight-title">{content.title}</h2>
+        <h3>{content.subtitle}</h3>
+        <p>{content.description}</p>
+        {content.linkHref && content.linkLabel && (
+          <a href={content.linkHref} target="_blank" rel="noreferrer">
+            {content.linkLabel} <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+      <div className="courtyard-spotlight__number" aria-hidden="true">149</div>
+    </section>
+  );
+}
+
 function Faqs({ faqs }) {
   if (!faqs) return null;
   return (
@@ -420,11 +451,12 @@ export default function InteriorPage({ slug, page, planningFacts, seoTitle }) {
         <>
           <MatterportTour />
           <Hotel360Tour />
-          <BallroomCollection />
+          <CourtyardSpotlight content={page.courtyardSpotlight} />
+          <BallroomCollection config={page.ballroomCollection} />
         </>
       )}
 
-      {page.introTitle && page.intro && !["blog", "contact", "venue","services"].includes(slug) && (<section className="page-intro">
+      {page.introTitle && page.intro && !["blog", "contact", "venue", "services"].includes(slug) && (<section className="page-intro">
         <div>
           <p className="section-kicker">Magnoliya Grand · Manassas, Virginia</p>
           <h2>{page.introTitle}</h2>
@@ -434,20 +466,20 @@ export default function InteriorPage({ slug, page, planningFacts, seoTitle }) {
 
       {!["blog", "contact", "venue"].includes(slug) && <Stats items={page.highlights} />}
       <PlanningFacts facts={planningFacts} slug={slug} />
-      <EditorialSections sections={page.sections} />
+      <EditorialSections sections={page.sections} linkLabel={page.editorialLinkLabel} linkHref={page.editorialLinkHref} />
       <CapacityTable rows={page.table} additionalSpaces={page.additionalSpaces} />
       {slug === "features" ? (
-        <CelebrationBookExact features={page.featureGrid} />
+        <CelebrationBookExact features={page.featureGrid} cta={page.featureCta} />
       ) : slug === "rooms-suites" ? (
         <RoomsSuitesExperience hotels={page.hotelStays} benefits={page.stayBenefits} />
       ) : slug === "services" ? (
         <ServicesShowcase items={page.services} />
       ) : (
-        <FeatureGrid items={page.featureGrid} linkLabel={slug === "blog" ? "Read article" : "Explore event"} />
+        <FeatureGrid items={page.featureGrid} linkLabel={page.featureLinkLabel || (slug === "blog" ? "Read article" : "Explore event")} />
       )}
       <Gallery images={page.gallery} />
       {shouldShowFaqs && <Faqs faqs={page.faqs} />}
-      {slug === "contact" && <ContactExperience />}
+      {slug === "contact" && <ContactExperience content={page.experience} />}
       <Policy items={page.policy} />
       {slug !== "privacy" && <BookingBand title={slug === "contact" ? "Come see what is possible." : undefined} />}
       <SiteFooter />

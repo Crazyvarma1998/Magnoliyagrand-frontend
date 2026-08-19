@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "venue";
 const seoTitle = "Event Venue in Manassas, VA | Magnoliya Grand";
@@ -26,6 +27,18 @@ const page = {
       "label": "theater capacity"
     }
   ],
+  "courtyardSpotlight": {
+    "eyebrow": "More room for every arrival",
+    "title": "Courtyard by Marriott",
+    "subtitle": "More flexibility for larger guest lists.",
+    "description": "Courtyard by Marriott Manassas Battlefield Park adds 149 guest rooms just moments from Magnoliya Grand, giving hosts greater flexibility for large groups, peak dates, and multi-day celebrations.",
+    "image": "/hotel-assets/courtyard-exterior-enhanced.jpg",
+    "imageWidth": 1672,
+    "imageHeight": 941,
+    "imageAlt": "Courtyard by Marriott Manassas Battlefield Park exterior",
+    "linkLabel": "Explore Courtyard by Marriott",
+    "linkHref": "https://www.marriott.com/en-us/hotels/mnzch-courtyard-manassas-battlefield-park/overview/"
+  },
   "sections": [],
   "table": [
     [
@@ -106,8 +119,19 @@ const page = {
 
 const planningFacts = null;
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function VenuePage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function VenuePage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={planningFacts} seoTitle={seoTitle} />;
 }

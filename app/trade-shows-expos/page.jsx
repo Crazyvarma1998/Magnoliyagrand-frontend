@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "trade-shows-expos";
 const seoTitle = "Trade Show & Expo Venue in Virginia | Magnoliya Grand";
@@ -10,6 +11,8 @@ const page = {
   "accent": "ideas to connect.",
   "description": "Flexible trade show and expo space near Washington, D.C. and Dulles Airport with 14,500 square feet, registration areas, Wi-Fi, parking, and hotel access.",
   "heroImage": "/home-assets/banner-9.jpg",
+  "editorialLinkLabel": "Plan your event",
+  "editorialLinkHref": "/contact",
   "introTitle": "A flexible expo floor in a destination guests can reach",
   "intro": "Use the open Magna Ballroom for exhibits and demonstrations, the pre-event area for registration, and divisible rooms for education, sponsors, or private meetings.",
   "highlights": [
@@ -69,8 +72,19 @@ const planningFacts = {
   ]
 };
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function TradeShowsExposPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function TradeShowsExposPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={cmsPage.planningFacts || planningFacts} seoTitle={seoTitle} />;
 }

@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "weddings";
 const seoTitle = "Northern Virginia Wedding Venue | Magnoliya Grand";
@@ -10,6 +11,8 @@ const page = {
   "accent": "somewhere unforgettable.",
   "description": "A luxury wedding venue in Manassas, Virginia with a grand ballroom, waterfront ceremony spaces, private suites, catering, and nearby hotel accommodations.",
   "heroImage": "/home-assets/banner-10.jpg",
+  "editorialLinkLabel": "Plan your event",
+  "editorialLinkHref": "/contact",
   "introTitle": "A Northern Virginia wedding venue made for your story",
   "intro": "Host an intimate ceremony, a grand multicultural celebration, or a ballroom reception for hundreds—all in one beautifully connected destination near Washington, D.C. and Dulles Airport.",
   "highlights": [
@@ -69,8 +72,19 @@ const planningFacts = {
   ]
 };
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function WeddingsPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function WeddingsPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={cmsPage.planningFacts || planningFacts} seoTitle={seoTitle} />;
 }

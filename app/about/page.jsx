@@ -1,4 +1,5 @@
 import InteriorPage, { createPageMetadata } from "../components/InteriorPage";
+import { getCmsPageConfig, getCmsPageRecord } from "../cms-client";
 
 const slug = "about";
 const seoTitle = "About Our Manassas Event Venue | Magnoliya Grand";
@@ -10,6 +11,8 @@ const page = {
   "accent": "genuine hospitality.",
   "description": "Meet Northern Virginia's landmark conference and event venue, where monumental scale, thoughtful service, and effortless access come together.",
   "heroImage": "/home-assets/about-img.gif",
+  "editorialLinkLabel": "Plan your event",
+  "editorialLinkHref": "/contact",
   "introTitle": "Welcome to Magnoliya Grand Manor",
   "intro": "Attached to the Hilton Garden Inn in Manassas, Magnoliya Grand is a premier destination for extraordinary events and unforgettable conferences. We are 25 miles from Washington, D.C. and 12 miles from Dulles International Airport, making arrival simple for local and traveling guests.",
   "highlights": [
@@ -50,8 +53,19 @@ const page = {
 
 const planningFacts = null;
 
-export const metadata = createPageMetadata(slug, page, seoTitle);
+export async function generateMetadata() {
+  const record = await getCmsPageRecord(slug);
+  const cmsPage = record?.sections?.find((section) => section.sectionKey === "page-config")?.contentJson || page;
+  const result = createPageMetadata(slug, cmsPage, record?.seoTitle || seoTitle);
+  if (record?.seoDescription) {
+    result.description = record.seoDescription;
+    result.openGraph.description = record.seoDescription;
+    result.twitter.description = record.seoDescription;
+  }
+  return result;
+}
 
-export default function AboutPage() {
-  return <InteriorPage slug={slug} page={page} planningFacts={planningFacts} seoTitle={seoTitle} />;
+export default async function AboutPage() {
+  const cmsPage = await getCmsPageConfig(slug, page);
+  return <InteriorPage slug={slug} page={cmsPage} planningFacts={planningFacts} seoTitle={seoTitle} />;
 }

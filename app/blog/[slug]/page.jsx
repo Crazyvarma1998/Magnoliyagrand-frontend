@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import BlogArticlePage from "../../components/BlogArticlePage";
 import { blogArticles } from "../../site-data";
+import { getCmsBlogCollection, getCmsBlogPost } from "../../cms-client";
 
 const BLOG_SEO_TITLES = {
   "choosing-northern-virginia-wedding-venue": "Northern Virginia Wedding Venue Guide | Magnoliya Grand",
@@ -17,7 +18,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const article = blogArticles[slug];
+  const article = await getCmsBlogPost(slug, blogArticles[slug]);
   if (!article) return {};
   return {
     title: BLOG_SEO_TITLES[slug] || `${article.title} | Magnoliya Grand`,
@@ -47,6 +48,8 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogArticleRoute({ params }) {
   const { slug } = await params;
-  if (!blogArticles[slug]) notFound();
-  return <BlogArticlePage slug={slug} />;
+  const article = await getCmsBlogPost(slug, blogArticles[slug]);
+  if (!article) notFound();
+  const articles = await getCmsBlogCollection(blogArticles);
+  return <BlogArticlePage slug={slug} article={article} articles={articles} />;
 }

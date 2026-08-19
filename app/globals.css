@@ -2514,8 +2514,144 @@ html body .site-footer .footer-social-icons svg { width: 29px; height: 29px; }
   font-size: 10px;
   letter-spacing: .08em;
 }
+
+.courtyard-spotlight {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0,1.12fr) minmax(360px,.88fr);
+  align-items: center;
+  gap: clamp(50px,7vw,118px);
+  padding: clamp(100px,11vw,175px) max(5vw,28px);
+  overflow: hidden;
+  color: #25211c;
+  background:
+    linear-gradient(115deg,rgba(255,255,255,.7),transparent 56%),
+    #eee8de;
+}
+.courtyard-spotlight::before {
+  content: "COURTYARD";
+  position: absolute;
+  z-index: -1;
+  right: -.03em;
+  top: -.12em;
+  color: rgba(87,67,40,.045);
+  font: 400 clamp(100px,18vw,300px)/1 var(--font-display);
+  letter-spacing: -.07em;
+  pointer-events: none;
+}
+.courtyard-spotlight__image {
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #17130f;
+  box-shadow: 0 45px 100px rgba(44,34,23,.2);
+  clip-path: inset(0 0 0 0 round 2px);
+  animation: courtyardImageReveal both 1s cubic-bezier(.16,1,.3,1);
+  animation-timeline: view();
+  animation-range: entry 7% cover 38%;
+}
+.courtyard-spotlight__image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,transparent 58%,rgba(24,19,14,.55));
+  pointer-events: none;
+}
+.courtyard-spotlight__image img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  transition: filter 1s ease;
+}
+.courtyard-spotlight:hover .courtyard-spotlight__image img { transform: none; filter: saturate(1.06); }
+.courtyard-spotlight__image > span {
+  position: absolute;
+  z-index: 2;
+  left: clamp(25px,4vw,55px);
+  bottom: clamp(24px,4vw,48px);
+  color: #fff;
+  font-size: var(--type-label);
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.courtyard-spotlight__copy {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  animation: courtyardCopyReveal both 1s cubic-bezier(.16,1,.3,1);
+  animation-timeline: view();
+  animation-range: entry 10% cover 42%;
+}
+.courtyard-spotlight__copy h2 {
+  margin: 23px 0 14px;
+  color: #201b16;
+  font: 400 clamp(52px,6vw,94px)/.9 var(--font-display);
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+.courtyard-spotlight__copy h3 {
+  max-width: 560px;
+  margin: 0 0 30px;
+  color: #9a6c2d;
+  font: italic 400 clamp(29px,3vw,46px)/1.08 var(--font-display);
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.courtyard-spotlight__copy > p:last-of-type {
+  max-width: 620px;
+  margin: 0;
+  color: #5f5a53;
+  font-size: var(--type-body);
+  line-height: 1.9;
+}
+.courtyard-spotlight__copy a {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 36px;
+  padding-bottom: 8px;
+  color: #7f5720;
+  border-bottom: 1px solid rgba(127,87,32,.42);
+  font-size: var(--type-label);
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.courtyard-spotlight__copy a span { transition: transform .3s ease; }
+.courtyard-spotlight__copy a:hover span { transform: translate(4px,-4px); }
+.courtyard-spotlight__number {
+  position: absolute;
+  right: 5vw;
+  bottom: -.18em;
+  z-index: 0;
+  color: rgba(131,92,39,.07);
+  font: 400 clamp(120px,17vw,270px)/1 var(--font-display);
+  letter-spacing: -.08em;
+  pointer-events: none;
+}
+@keyframes courtyardImageReveal {
+  from { opacity: 0; clip-path: inset(8% 42% 8% 0); transform: translateX(-34px); }
+  to { opacity: 1; clip-path: inset(0); transform: none; }
+}
+@keyframes courtyardCopyReveal {
+  from { opacity: 0; transform: translateY(48px); }
+  to { opacity: 1; transform: none; }
+}
 @media (max-width: 1000px) {
   .venue-services__grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .courtyard-spotlight { grid-template-columns: 1fr; gap: 50px; }
+  .courtyard-spotlight__image { min-height: 0; aspect-ratio: 16/9; }
+  .courtyard-spotlight__image img { min-height: 0; }
 }
 @media (max-width: 720px) {
   .venue-services { padding: 68px 18px; }
@@ -2528,6 +2664,16 @@ html body .site-footer .footer-social-icons svg { width: 29px; height: 29px; }
   .hotel-tour__heading,.hotel-tour__instruction { width: calc(100% - 36px); }
   .hotel-tour__frame { width: calc(100% - 36px); height: auto; aspect-ratio: 16/9; }
   .hotel-tour__instruction { align-items: flex-start; line-height: 1.6; }
+  .courtyard-spotlight { padding: 76px 18px 90px; gap: 42px; }
+  .courtyard-spotlight__image { aspect-ratio: 16/9; }
+  .courtyard-spotlight__copy h2 { font-size: clamp(46px,14vw,65px); }
+  .courtyard-spotlight__copy h3 { font-size: clamp(28px,8vw,38px); }
+  .courtyard-spotlight__copy > p:last-of-type { font-size: var(--type-body); line-height: 1.8; }
+  .courtyard-spotlight__number { right: 10px; font-size: 145px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .courtyard-spotlight__image,.courtyard-spotlight__copy { animation: none; }
+  .courtyard-spotlight__image img,.courtyard-spotlight__copy a span { transition: none; }
 }
 
 /* Event pages: editorial scroll choreography (hero remains untouched). */
@@ -4665,7 +4811,7 @@ main h3 br + em,
 
 /* Final site-wide type scale: body copy stays readable on every page and viewport. */
 .utility-bar { font-size: 9px; }
-.nav-submenu a { font-size: 12px; }
+.nav-submenu a { font-size: 16px; }
 .nav-cta { font-size: 10px; }
 .eyebrow,
 .section-kicker { font-size: 11px; line-height: 1.5; }

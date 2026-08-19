@@ -5,6 +5,11 @@ const exactDimensions = {
   "/home-assets/magnoliya-official-logo.png": { width: 4216, height: 806 },
   "/contact-assets/contact-hero.png": { width: 2051, height: 767 },
   "/service-assets/trusted-partner-network.png": { width: 1254, height: 1254 },
+  "/event-assets/weddings-receptions-2026.jpg": { width: 1536, height: 1024 },
+  "/event-assets/conferences-corporate-2026.jpg": { width: 1536, height: 1024 },
+  "/event-assets/meetings-seminars-2026.jpg": { width: 1536, height: 1024 },
+  "/event-assets/cultural-music-concerts-2026.jpg": { width: 1536, height: 1024 },
+  "/event-assets/trade-shows-expos-2026.jpg": { width: 1536, height: 1024 },
   "/gallery/img-1.jpg": { width: 465, height: 385 },
   "/gallery/img-3.jpg": { width: 465, height: 385 },
 };

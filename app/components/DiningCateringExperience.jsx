@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { SiteFooter, SiteHeader } from "./SiteChrome";
 import { bookingUrl } from "../site-data";
 import styles from "./DiningCateringExperience.module.css";
+import { useCmsPage } from "../hooks/useCmsPage";
 
 const services = [
   ["Full-Service Event Catering", "Customized menus for weddings, corporate events, galas, celebrations, and social gatherings."],
@@ -33,7 +34,25 @@ const diningFaqs = [
   ["Can Magnoliya Grand coordinate other event services along with catering?", "Yes. We can help coordinate a complete event experience through our trusted partner network, including décor, DJ and entertainment, photography and videography, audio-visual services, and professional live streaming. Our event coordination team helps bring these elements together so your celebration flows smoothly from beginning to end."],
 ];
 
+const defaultDiningContent = {
+  hero: { image: "/dining-catering/hero.jpg", eyebrow: "The art of hospitality", titleStart: "Dining", titleAccent: "&", titleEnd: "Catering", leadTop: "Exceptional cuisine. Beautifully presented.", leadBottom: "Unforgettable experiences.", brand: "Magnoliya Grand", note: "Thoughtful menus, polished service, and a table designed around your occasion.", exploreLabel: "Explore" },
+  story: { aside: "The dining experience", label: "Made for your moment", title: "Every unforgettable event has a", accent: "flavor of its own.", paragraphs: ["At Magnoliya Grand, exceptional dining is an essential part of an exceptional event. Our culinary team creates thoughtfully designed menus tailored to your celebration, from elegant plated dinners and sophisticated buffets to interactive food stations, cocktail receptions, and customized cultural cuisine.", "Whether you're hosting an elegant wedding, conference, corporate event, grand gala, cultural celebration, or intimate gathering, our catering team works closely with you to create a dining experience that reflects your vision and delights your guests."], linkLabel: "Discover every service" },
+  servicesIntro: { label: "A complete culinary collection", title: "Thirteen ways to make", accent: "the table memorable.", description: "Customizable menus, professional service, beautiful presentation, and trusted culinary partners—brought together for a dining experience that feels entirely your own.", cardLinkLabel: "Ask our events team" },
+  services,
+  faqIntro: { label: "The details, thoughtfully answered", title: "Frequently", accent: "asked questions.", description: "Explore menus, cultural traditions, dietary needs, tastings, pricing, and everything that shapes your dining experience.", linkLabel: "Have another question?" },
+  faqs: diningFaqs,
+  promise: { label: "Your menu, beautifully considered", titleLines: ["Imagine it.", "Taste it.", "Celebrate it."], steps: [["Share your vision", "Tell us about your occasion, guests, traditions, service style, and culinary preferences."], ["Shape the menu", "Our team brings the details together—from flavor and dietary needs to presentation and timing."], ["Savor the moment", "Enjoy polished service and a dining experience that carries your celebration from first bite to final toast."]] },
+  cta: { label: "Your date is waiting", title: "Let's create a menu", accent: "worth remembering.", description: "From the first bite to the final toast, we make every occasion taste extraordinary.", primaryLabel: "Submit booking request", secondaryLabel: "Contact the events team" },
+};
+defaultDiningContent.hero.exploreHref = "#dining-story";
+defaultDiningContent.story.linkHref = "#services";
+defaultDiningContent.servicesIntro.cardLinkHref = "/contact";
+defaultDiningContent.faqIntro.linkHref = "/contact";
+defaultDiningContent.cta.primaryHref = bookingUrl;
+defaultDiningContent.cta.secondaryHref = "/contact";
+
 export default function DiningCateringExperience() {
+  const content = useCmsPage("dining-catering", defaultDiningContent);
   const rootRef = useRef(null);
 
   useEffect(() => {
@@ -79,42 +98,42 @@ export default function DiningCateringExperience() {
       <SiteHeader />
       <main>
         <section className={styles.hero} aria-labelledby="dining-hero-title">
-          <div className={styles.heroMedia} aria-hidden="true"><img src="/dining-catering/hero.jpg" alt="" width="1536" height="1024" fetchPriority="high" /></div>
+          <div className={styles.heroMedia} aria-hidden="true"><img src={content.hero.image} alt="" width="1536" height="1024" fetchPriority="high" /></div>
           <div className={styles.heroShade} /><div className={styles.heroGrain} />
           <div className={styles.heroContent}>
-            <p className={styles.eyebrow}><span /> The art of hospitality</p>
-            <h1 id="dining-hero-title">Dining <i>&amp;</i> Catering</h1>
-            <p className={styles.heroLead}>Exceptional cuisine. Beautifully presented.<br />Unforgettable experiences.</p>
+            <p className={styles.eyebrow}><span /> {content.hero.eyebrow}</p>
+            <h1 id="dining-hero-title">{content.hero.titleStart} <i>{content.hero.titleAccent}</i> {content.hero.titleEnd}</h1>
+            <p className={styles.heroLead}>{content.hero.leadTop}<br />{content.hero.leadBottom}</p>
           </div>
-          <div className={styles.heroNote}><span>Magnoliya Grand</span><p>Thoughtful menus, polished service, and a table designed around your occasion.</p></div>
-          <a className={styles.scrollCue} href="#dining-story"><span>Explore</span><i aria-hidden="true" /></a>
+          <div className={styles.heroNote}><span>{content.hero.brand}</span><p>{content.hero.note}</p></div>
+          <a className={styles.scrollCue} href={content.hero.exploreHref || "#dining-story"}><span>{content.hero.exploreLabel}</span><i aria-hidden="true" /></a>
         </section>
 
         <section className={styles.story} id="dining-story">
-          <div className={styles.storyAside} data-dining-reveal><p>The dining experience</p></div>
+          <div className={styles.storyAside} data-dining-reveal><p>{content.story.aside}</p></div>
           <div className={styles.storyCopy} data-dining-reveal>
-            <p className={styles.sectionLabel}>Made for your moment</p>
-            <h2>Every unforgettable event has a <em>flavor of its own.</em></h2>
+            <p className={styles.sectionLabel}>{content.story.label}</p>
+            <h2>{content.story.title} <em>{content.story.accent}</em></h2>
             <div className={styles.storyColumns}>
-              <p>At Magnoliya Grand, exceptional dining is an essential part of an exceptional event. Our culinary team creates thoughtfully designed menus tailored to your celebration, from elegant plated dinners and sophisticated buffets to interactive food stations, cocktail receptions, and customized cultural cuisine.</p>
-              <div><p>Whether you&apos;re hosting an elegant wedding, conference, corporate event, grand gala, cultural celebration, or intimate gathering, our catering team works closely with you to create a dining experience that reflects your vision and delights your guests.</p><a href="#services">Discover every service <span>↓</span></a></div>
+              <p>{content.story.paragraphs[0]}</p>
+              <div><p>{content.story.paragraphs[1]}</p><a href={content.story.linkHref || "#services"}>{content.story.linkLabel} <span>↓</span></a></div>
             </div>
           </div>
         </section>
 
         <section className={styles.services} id="services" aria-labelledby="dining-services-title">
           <header className={styles.servicesHeader} data-dining-reveal>
-            <div><p className={styles.sectionLabel}>A complete culinary collection</p><h2 id="dining-services-title">Thirteen ways to make<br /><em>the table memorable.</em></h2></div>
-            <p>Customizable menus, professional service, beautiful presentation, and trusted culinary partners—brought together for a dining experience that feels entirely your own.</p>
+            <div><p className={styles.sectionLabel}>{content.servicesIntro.label}</p><h2 id="dining-services-title">{content.servicesIntro.title}<br /><em>{content.servicesIntro.accent}</em></h2></div>
+            <p>{content.servicesIntro.description}</p>
           </header>
           <div className={styles.serviceList}>
-            {services.map(([title, description, customImage], index) => {
+            {content.services.map(([title, description, customImage], index) => {
               const number = String(index + 1).padStart(2, "0");
               const portrait = index >= 7 && [7, 8, 10, 11, 12].includes(index);
               return (
                 <article className={styles.serviceCard} key={title} data-dining-reveal>
                   <div className={styles.serviceMedia}><img src={customImage ?? `/dining-catering/service-${number}.jpg`} alt={`${title} presentation at Magnoliya Grand`} width={customImage ? 1254 : portrait ? 1402 : 1536} height={customImage ? 1254 : portrait ? 1122 : 1024} loading={index < 2 ? "eager" : "lazy"} /></div>
-                  <div className={styles.serviceCopy}><div className={styles.serviceRule} aria-hidden="true"><i /></div><h3>{title}</h3><p>{description}</p><a href="/contact">Ask our events team <span>↗</span></a></div>
+                  <div className={styles.serviceCopy}><div className={styles.serviceRule} aria-hidden="true"><i /></div><h3>{title}</h3><p>{description}</p><a href={content.servicesIntro.cardLinkHref || "/contact"}>{content.servicesIntro.cardLinkLabel} <span>↗</span></a></div>
                 </article>
               );
             })}
@@ -123,13 +142,13 @@ export default function DiningCateringExperience() {
 
         <section className={styles.faq} aria-labelledby="dining-faq-title">
           <div className={styles.faqIntro} data-dining-reveal>
-            <p className={styles.sectionLabel}>The details, thoughtfully answered</p>
-            <h2 id="dining-faq-title">Frequently<br /><em>asked questions.</em></h2>
-            <p>Explore menus, cultural traditions, dietary needs, tastings, pricing, and everything that shapes your dining experience.</p>
-            <a href="/contact">Have another question? <span>↗</span></a>
+            <p className={styles.sectionLabel}>{content.faqIntro.label}</p>
+            <h2 id="dining-faq-title">{content.faqIntro.title}<br /><em>{content.faqIntro.accent}</em></h2>
+            <p>{content.faqIntro.description}</p>
+            <a href={content.faqIntro.linkHref || "/contact"}>{content.faqIntro.linkLabel} <span>↗</span></a>
           </div>
           <div className={styles.faqList}>
-            {diningFaqs.map(([question, answer]) => (
+            {content.faqs.map(([question, answer]) => (
               <details className={styles.faqItem} key={question} data-dining-reveal>
                 <summary>
                   <span className={styles.faqQuestion}>{question}</span>
@@ -142,22 +161,18 @@ export default function DiningCateringExperience() {
         </section>
 
         <section className={styles.promise}>
-          <div className={styles.promiseTitle} data-dining-reveal><p className={styles.sectionLabel}>Your menu, beautifully considered</p><h2>Imagine it.<br /><em>Taste it.</em><br />Celebrate it.</h2></div>
+          <div className={styles.promiseTitle} data-dining-reveal><p className={styles.sectionLabel}>{content.promise.label}</p><h2>{content.promise.titleLines[0]}<br /><em>{content.promise.titleLines[1]}</em><br />{content.promise.titleLines[2]}</h2></div>
           <div className={styles.promiseSteps}>
-            {[
-              ["Share your vision", "Tell us about your occasion, guests, traditions, service style, and culinary preferences."],
-              ["Shape the menu", "Our team brings the details together—from flavor and dietary needs to presentation and timing."],
-              ["Savor the moment", "Enjoy polished service and a dining experience that carries your celebration from first bite to final toast."],
-            ].map(([title, body]) => <article key={title} data-dining-reveal><h3>{title}</h3><p>{body}</p></article>)}
+            {content.promise.steps.map(([title, body]) => <article key={title} data-dining-reveal><h3>{title}</h3><p>{body}</p></article>)}
           </div>
         </section>
 
         <section className={styles.cta}>
           <div className={styles.ctaGlow} aria-hidden="true" />
-          <p className={styles.sectionLabel} data-dining-reveal>Your date is waiting</p>
-          <h2 data-dining-reveal>Let&apos;s create a menu<br /><em>worth remembering.</em></h2>
-          <p data-dining-reveal>From the first bite to the final toast, we make every occasion taste extraordinary.</p>
-          <div className={styles.ctaActions} data-dining-reveal><a className={styles.primaryAction} href={bookingUrl} target="_blank" rel="noreferrer">Submit booking request <span>↗</span></a><a className={styles.secondaryAction} href="/contact">Contact the events team <span>↗</span></a></div>
+          <p className={styles.sectionLabel} data-dining-reveal>{content.cta.label}</p>
+          <h2 data-dining-reveal>{content.cta.title}<br /><em>{content.cta.accent}</em></h2>
+          <p data-dining-reveal>{content.cta.description}</p>
+          <div className={styles.ctaActions} data-dining-reveal><a className={styles.primaryAction} href={content.cta.primaryHref || bookingUrl} target="_blank" rel="noreferrer">{content.cta.primaryLabel} <span>↗</span></a><a className={styles.secondaryAction} href={content.cta.secondaryHref || "/contact"}>{content.cta.secondaryLabel} <span>↗</span></a></div>
         </section>
       </main>
       <SiteFooter />

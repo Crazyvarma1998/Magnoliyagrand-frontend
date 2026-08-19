@@ -4,10 +4,11 @@ import { blogArticles } from "../site-data";
 import { imageDimensions } from "../image-data";
 import { SITE_URL } from "../seo-config";
 
-export default function BlogArticlePage({ slug }) {
-  const article = blogArticles[slug];
+export default function BlogArticlePage({ slug, article: suppliedArticle, articles: suppliedArticles }) {
+  const articles = suppliedArticles || blogArticles;
+  const article = suppliedArticle || articles[slug];
   if (!article) return null;
-  const related = Object.entries(blogArticles).filter(([key]) => key !== slug).slice(0, 2);
+  const related = Object.entries(articles).filter(([key]) => key !== slug).slice(0, 2);
   const titleWords = article.title.split(" ");
   const titleAccent = titleWords.slice(-2).join(" ");
   const titleLead = titleWords.slice(0, -2).join(" ");
