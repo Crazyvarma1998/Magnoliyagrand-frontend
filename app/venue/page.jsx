@@ -87,11 +87,15 @@ const page = {
   "additionalSpaces": [
     [
       "Front Pre-function Area",
-      "3,000 square feet"
+      "4,000 square feet"
+    ],
+    [
+      "Side Pre-function Area",
+      "2,000 square feet"
     ],
     [
       "Back Pre-function Area",
-      "2,000 square feet"
+      "1,500 square feet"
     ],
     [
       "Lake View Patio",
